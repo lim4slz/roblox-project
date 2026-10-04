@@ -17,10 +17,15 @@ local casts: { [Model]: any } = {}
 local busy = false
 
 local function controls()
-	local ok, module = pcall(function()
-		return require(player:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule") :: ModuleScript) :: any
+	local scripts = player:FindFirstChild("PlayerScripts")
+	local module = scripts and scripts:FindFirstChild("PlayerModule")
+	if module == nil or not module:IsA("ModuleScript") then
+		return nil
+	end
+	local ok, result = pcall(function()
+		return (require(module) :: any):GetControls()
 	end)
-	return if ok and module then module:GetControls() else nil
+	return if ok then result else nil
 end
 
 local function stopCast(character: Model)
