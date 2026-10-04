@@ -138,10 +138,11 @@ Quem assiste de mais de 900 studs não roda os VFX, e efeitos de tela e shake pe
 | `test_runtime.luau` (Lune) | 937 checagens ok: curvas, cone, arco do anel, root motion, dados, cues e markers |
 | `check_props.luau` | 92 propriedades escritas pelo runtime existem e são graváveis (reflection 0.728) |
 | Kit e place | montados e relidos pelo Lune |
+| Roblox Studio | place de teste aberto no Studio: animação e efeitos funcionando |
 
 ## Limitações reais
 
-- O runtime **não foi rodado dentro do Roblox Studio**: não tem Roblox neste ambiente. Ele foi validado por análise estática, testes em Lune e checagem de propriedades, mas o comportamento em jogo (visual, timing de rede, performance real) precisa ser conferido no Studio.
+- Funciona no place de teste do Studio. Ainda não foi medido em jogo publicado com vários jogadores nem em celular fraco (timing de rede e performance real).
 - O previs é Cycles no Blender com rig de blocos. Neon, Beam e transparência do Roblox não ficam idênticos ao previs, então a intensidade final se ajusta no Studio (curvas e cores na spec ou em `Config`).
 - A distorção usa Glass, que só refrata com qualidade gráfica alta. Em gráfico baixo fica uma esfera quase invisível.
 - "Invert" é um frame preto e branco, não uma inversão real de cor.
