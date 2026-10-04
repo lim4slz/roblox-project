@@ -39,6 +39,20 @@ O personagem precisa ser **R15**. A lâmina e o cachecol são adicionados pelo s
    Publique no mesmo dono do jogo (usuário ou grupo).
 3. Cole o ID em `ROBLOX/src/shared/Assets.luau` (`Assets.Animations.ANIM_01_ATOMIC_ECLIPSE`).
 
+## Pacotes de venda
+
+`lune run SCRIPTS/lune/build_packs.luau` (depois do `build_kit.luau`) gera `EXPORT/packs/ATOMIC_ECLIPSE/`:
+
+| Arquivo | Conteúdo |
+|---|---|
+| `ATOMIC_ECLIPSE_Animation.rbxm` | só a animação, juntas padrão do R15 |
+| `ATOMIC_ECLIPSE_Animation_Sword.rbxm` | animação com a junta da espada, a espada e o script que encaixa na mão |
+| `ATOMIC_ECLIPSE_Full.rbxm` | habilidade completa (efeitos, espada, dano) |
+| `ATOMIC_ECLIPSE_preview.mp4` | vídeo de prévia |
+| `README.md` | instruções pro comprador (inglês e português) |
+
+Não use o nome da obra de referência no título nem na thumbnail.
+
 ## Estrutura
 
 ```
@@ -46,9 +60,10 @@ ANIMATIONS/<NOME>/        .blend da animação, .rbxanim (export do add-on), tim
 CHARACTER/                metadados do rig (C0/C1 de cada junta)
 EXPORT/KeyframeSequences/ KeyframeSequence pronto pro Roblox (com KeyframeMarkers)
 EXPORT/reports/           relatório da redução de keyframes e da releitura do .rbxm
+EXPORT/packs/             pacotes de venda (só animação, com espada, completa)
 REFERENCE/                previs em vídeo e contact sheets
 RIG/                      rig R15 do Blender (feito com o create_rig do add-on)
-ROBLOX/                   projeto Rojo, kit .rbxm e place de teste
+ROBLOX/                   projeto Rojo, kit .rbxm, place de teste e fontes dos pacotes
 SCRIPTS/blender/          motor de animação, habilidades, previs, QA
 SCRIPTS/tools/            exportação pro Roblox (KeyframeSequence, dados, rig, sourcemap)
 SCRIPTS/lune/             build do .rbxm/.rbxl e testes
