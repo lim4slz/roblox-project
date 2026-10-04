@@ -4,7 +4,7 @@ Inspirada em "I Am Atomic" (The Eminence in Shadow). Nome, golpe e execução s�
 O arco é: calma absoluta, o mundo escurece, toda a magia é comprimida num ponto, silêncio
 e uma explosão atômica com o conjurador intacto no olho dela.
 
-Previs: [REFERENCE/ANIM_01_ATOMIC_ECLIPSE](../REFERENCE/ANIM_01_ATOMIC_ECLIPSE) (vídeo do clímax e contact sheet).
+Previs: [REFERENCE/ANIM_01_ATOMIC_ECLIPSE](../REFERENCE/ANIM_01_ATOMIC_ECLIPSE) (vídeo completo de 32 s, vídeo do clímax e contact sheet).
 
 ## Dados técnicos
 

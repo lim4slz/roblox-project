@@ -1,14 +1,14 @@
 --!strict
--- Monta os pacotes de venda de uma habilidade em EXPORT/packs/<NOME>/:
---   <NOME>_Animation.rbxm        só a animação, juntas padrão do R15
---   <NOME>_Animation_Sword.rbxm  animação com a junta da espada + espada + script que encaixa
---   <NOME>_Full.rbxm             habilidade completa (cópia do kit)
+-- Monta a pasta que vai pro comprador em EXPORT/packs/ATOMIC_ECLIPSE/:
+--   1_Animation_Only, 2_Animation_With_Sword, 3_Full_Ability, Demo, Preview e README.txt
+-- Os scripts que vão na pasta saem com comentários e mensagens em inglês (ROBLOX/packs/english.luau).
 -- Rode depois do build_kit.luau.
 --   lune run SCRIPTS/lune/build_packs.luau
 
 local fs = require("@lune/fs")
 local roblox = require("@lune/roblox")
 local process = require("@lune/process")
+local luau = require("@lune/luau")
 
 local Instance = roblox.Instance
 local CFrame = roblox.CFrame
@@ -20,8 +20,10 @@ local Enum = roblox.Enum
 
 local ROOT = process.cwd
 local ANIM = "ANIM_01_ATOMIC_ECLIPSE"
-local PACK = "ATOMIC_ECLIPSE"
-local OUT = `{ROOT}/EXPORT/packs/{PACK}`
+local NAME = "AtomicEclipse"
+local OUT = `{ROOT}/EXPORT/packs/ATOMIC_ECLIPSE`
+
+local english = luau.load(fs.readFile(`{ROOT}/ROBLOX/packs/english.luau`))()
 
 local R15 = {
 	HumanoidRootPart = true, LowerTorso = true, UpperTorso = true, Head = true,
@@ -31,10 +33,46 @@ local R15 = {
 	RightUpperLeg = true, RightLowerLeg = true, RightFoot = true,
 }
 
+local function translate(source: string): string
+	local out = {}
+	for line in string.gmatch(source .. "\n", "(.-)\n") do
+		local indent, body = string.match(line, "^(%s*)(.-)%s*$")
+		local en = english[body]
+		table.insert(out, if en then indent .. en else line)
+	end
+	if out[#out] == "" then
+		table.remove(out)
+	end
+	return table.concat(out, "\n")
+end
+
+local PORTUGUESE = { "[ãõçáéíóúâêôàÃÕÇÁÉÍÓÚÂÊÔ]", " não ", " pra ", " com ", " uma ", " quando ", " aqui ", " então " }
+
+local function englishScripts(root: any): number
+	local list = if root:IsA("LuaSourceContainer") then { root } else {}
+	for _, d in root:GetDescendants() do
+		if d:IsA("LuaSourceContainer") then
+			table.insert(list, d)
+		end
+	end
+	for _, s in list do
+		s.Source = translate(s.Source)
+		for _, pattern in PORTUGUESE do
+			local at = string.find(s.Source, pattern)
+			if at then
+				local before = string.match(string.sub(s.Source, 1, at), "[^\n]*$") or ""
+				local after = string.match(string.sub(s.Source, at + 1), "^[^\n]*") or ""
+				error(`sobrou português em {s:GetFullName()}: {before}{after}`)
+			end
+		end
+	end
+	return #list
+end
+
 local function loadSequence(): any
 	local kfs = roblox.deserializeModel(fs.readFile(`{ROOT}/EXPORT/KeyframeSequences/{ANIM}.rbxm`))[1]
 	assert(kfs.ClassName == "KeyframeSequence", "o .rbxm da animação não tem KeyframeSequence")
-	kfs.Name = PACK
+	kfs.Name = "ATOMIC_ECLIPSE"
 	return kfs
 end
 
@@ -146,44 +184,71 @@ local function count(root: any, class: string): number
 	return n
 end
 
+local function write(dir: string, file: string, data: string)
+	fs.writeDir(`{OUT}/{dir}`)
+	fs.writeFile(`{OUT}/{dir}/{file}`, data)
+end
+
+if fs.isDir(OUT) then
+	fs.removeDir(OUT)
+end
 fs.writeDir(OUT)
 
+-- 1. só a animação
 local plain = loadSequence()
 keepPoses(plain, {})
-fs.writeFile(`{OUT}/{PACK}_Animation.rbxm`, roblox.serializeModel({ plain }, false))
+write("1_Animation_Only", `{NAME}_Animation.rbxm`, roblox.serializeModel({ plain }, false))
 
--- numa pasta só: o Lune quebra ao salvar lado a lado instância lida de arquivo e instância nova
+-- 2. animação + espada, numa pasta só (o Lune quebra ao salvar lado a lado instância lida de arquivo e instância nova)
 local swordPack = Instance.new("Folder")
-swordPack.Name = `{PACK}_Sword`
+swordPack.Name = "ATOMIC_ECLIPSE_Sword"
 local withSword = loadSequence()
 keepPoses(withSword, { EmberBlade = true })
 withSword.Parent = swordPack
 attachScript().Parent = swordPack
-fs.writeFile(`{OUT}/{PACK}_Animation_Sword.rbxm`, roblox.serializeModel({ swordPack }, false))
+englishScripts(swordPack)
+write("2_Animation_With_Sword", `{NAME}_Animation_Sword.rbxm`, roblox.serializeModel({ swordPack }, false))
 
-local kit = `{ROOT}/ROBLOX/build/EmberAbilities.rbxm`
-assert(fs.isFile(kit), "rode o build_kit.luau antes")
-fs.writeFile(`{OUT}/{PACK}_Full.rbxm`, fs.readFile(kit))
+-- 3. habilidade completa
+local kitPath = `{ROOT}/ROBLOX/build/EmberAbilities.rbxm`
+assert(fs.isFile(kitPath), "rode o build_kit.luau antes")
+local kit = roblox.deserializeModel(fs.readFile(kitPath))[1]
+local kitScripts = englishScripts(kit)
+write("3_Full_Ability", `{NAME}_Full.rbxm`, roblox.serializeModel({ kit }, false))
 
-fs.writeFile(`{OUT}/README.md`, fs.readFile(`{ROOT}/ROBLOX/packs/README_ATOMIC_ECLIPSE.md`))
+-- demo
+local place = roblox.deserializePlace(fs.readFile(`{ROOT}/ROBLOX/build/EmberAbilities_Test.rbxl`))
+local rig = place:GetService("Workspace"):FindFirstChild("EmberRig")
+if rig then
+	rig.Name = "AnimationRig"
+end
+for _, service in place:GetChildren() do
+	englishScripts(service)
+end
+write("Demo", `{NAME}_Demo.rbxl`, roblox.serializePlace(place, false))
+
+-- vídeo e README
 local video = `{ROOT}/REFERENCE/{ANIM}/{ANIM}_previs.mp4`
 if fs.isFile(video) then
-	fs.writeFile(`{OUT}/{PACK}_preview.mp4`, fs.readFile(video))
+	write("Preview", `{NAME}_Preview.mp4`, fs.readFile(video))
 end
+fs.writeFile(`{OUT}/README.txt`, fs.readFile(`{ROOT}/ROBLOX/packs/README_ATOMIC_ECLIPSE.txt`))
 
 -- relê tudo
 local original = loadSequence()
 local frames = #original:GetChildren()
 local markers = count(original, "KeyframeMarker")
 
-local a = roblox.deserializeModel(fs.readFile(`{OUT}/{PACK}_Animation.rbxm`))
+local a = roblox.deserializeModel(fs.readFile(`{OUT}/1_Animation_Only/{NAME}_Animation.rbxm`))
 assert(#a == 1 and a[1].ClassName == "KeyframeSequence", "pacote só animação errado")
 assert(#a[1]:GetChildren() == frames and count(a[1], "KeyframeMarker") == markers, "keyframes ou markers sumiram")
+local joints = 0
 for name in poseNames(a[1]) do
 	assert(R15[name], `junta fora do R15 no pacote só animação: {name}`)
+	joints += 1
 end
 
-local b = roblox.deserializeModel(fs.readFile(`{OUT}/{PACK}_Animation_Sword.rbxm`))
+local b = roblox.deserializeModel(fs.readFile(`{OUT}/2_Animation_With_Sword/{NAME}_Animation_Sword.rbxm`))
 assert(#b == 1 and b[1].ClassName == "Folder", "pacote com espada devia ser uma pasta")
 local seq, script
 for _, inst in b[1]:GetChildren() do
@@ -208,21 +273,21 @@ for _, w in blade:GetDescendants() do
 	end
 end
 
-local c = roblox.deserializeModel(fs.readFile(`{OUT}/{PACK}_Full.rbxm`))[1]
-local scripts = 0
-for _, d in c:GetDescendants() do
-	if d:IsA("LuaSourceContainer") then
-		scripts += 1
-	end
+local c = roblox.deserializeModel(fs.readFile(`{OUT}/3_Full_Ability/{NAME}_Full.rbxm`))[1]
+assert(count(c, "KeyframeSequence") >= 1, "pacote completo sem animação")
+for _, pair in { { "ReplicatedStorage", "Ember" }, { "ServerScriptService", "EmberServer" }, { "StarterPlayerScripts", "EmberClient" } } do
+	local folder = c:FindFirstChild(pair[1])
+	assert(folder and folder:FindFirstChild(pair[2]), `pacote completo sem {pair[1]}/{pair[2]}`)
 end
-assert(count(c, "KeyframeSequence") >= 1 and scripts > 0, "pacote completo vazio")
 
-print(`{PACK}: {frames} keyframes, {markers} markers`)
-local joints = 0
-for _ in poseNames(a[1]) do
-	joints += 1
-end
-print(`  _Animation        {joints} juntas do R15`)
-print(`  _Animation_Sword  espada + AttachSword ok`)
-print(`  _Full             {scripts} scripts`)
-print(`  preview           {if fs.isFile(video) then "copiado" else "ainda não existe"}`)
+local d = roblox.deserializePlace(fs.readFile(`{OUT}/Demo/{NAME}_Demo.rbxl`))
+assert(d:GetService("ReplicatedStorage"):FindFirstChild("Ember"), "demo sem Ember")
+assert(d:GetService("ServerScriptService"):FindFirstChild("EmberServer"), "demo sem EmberServer")
+assert(d:GetService("Workspace"):FindFirstChild("AnimationRig"), "demo sem AnimationRig")
+
+print(`ATOMIC_ECLIPSE: {frames} keyframes, {markers} markers`)
+print(`  1_Animation_Only        {joints} juntas do R15`)
+print(`  2_Animation_With_Sword  espada + AttachSword ok`)
+print(`  3_Full_Ability          {kitScripts} scripts em inglês`)
+print(`  Demo                    place ok`)
+print(`  Preview                 {if fs.isFile(video) then "copiado" else "ainda não existe"}`)
