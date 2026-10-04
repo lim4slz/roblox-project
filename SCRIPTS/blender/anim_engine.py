@@ -240,6 +240,19 @@ class Timeline:
         c0w, _, c1wi = joint_mats("UpperTorso")
         return c0r @ lt @ c1ri @ c0w @ ut @ c1wi
 
+    def blade_visible(self, blade, frame):
+        if blade == "AzureBlade":
+            return self.dual
+        if self.blade_hidden:
+            return False
+        off = sorted(f for f, n, _ in self.markers if n == "BLADE_DISSOLVE")
+        on = sorted(f for f, n, _ in self.markers if n == "BLADE_REFORM")
+        for f0 in off:
+            f1 = next((f for f in on if f > f0), None)
+            if f0 + 18 <= frame <= (f1 + 20 if f1 is not None else self.frame_end):
+                return False
+        return True
+
     def phase(self, name, start, end):
         self.phases.append((name, int(start), int(end)))
 
@@ -334,9 +347,9 @@ def solve_leg(world, side, target, yaw_deg, pitch_deg, knee_out_deg):
     knee = h + thigh * L_THIGH
     shin = (h + d - knee).normalized()
     y = -thigh
-    zf = f - y * f.dot(y)
-    z = -zf.normalized()
-    x = y.cross(z)
+    # eixo da dobra do joelho: sempre definido, mesmo agachado com a coxa paralela ao joelho
+    x = dn.cross(fp).normalized()
+    z = x.cross(y)
     r_hip_w = Matrix((x, y, z)).transposed()
     s_local = r_hip_w.inverted() @ shin
     theta = math.atan2(-s_local.z, -s_local.y)
@@ -731,6 +744,50 @@ def _arm_solve(side, grip, r_t, pole, Ts, push, twist_prev, estimate=False):
     return _reach_limit(side, grip, r_t, push + added) - push
 
 
+BLADE_AVOID = ("UpperTorso", "LowerTorso", "Head", "LeftUpperLeg", "RightUpperLeg", "LeftLowerLeg", "RightLowerLeg")
+OTHER_ARM = {
+    "EmberBlade": ("LeftUpperArm", "LeftLowerArm", "LeftHand"),
+    "AzureBlade": ("RightUpperArm", "RightLowerArm", "RightHand"),
+}
+BLADE_DIRS = [Vector((math.cos(k * math.pi / 4), math.sin(k * math.pi / 4), 0)) for k in range(8)]
+
+
+def _blade_depth(world, blade):
+    box = _box(world, blade)
+    total = 0.0
+    for b in BLADE_AVOID + OTHER_ARM[blade]:
+        hit = _mtv(box, _box(world, b))
+        if hit:
+            total += hit[0]
+    return total
+
+
+def _hand_tilt(ax, ay):
+    return Matrix.Rotation(math.radians(ax), 4, "X") @ Matrix.Rotation(math.radians(ay), 4, "Y")
+
+
+def _blade_need(Ts, blade, hand, prev):
+    if _blade_depth(fk(Ts, Matrix.Identity(4)), blade) < 0.02:
+        return Vector()
+    base = Ts[hand]
+    dirs = sorted(BLADE_DIRS, key=lambda d: -d.dot(prev.normalized()) if prev.length > 1e-3 else 0)
+    best, low = None, (math.inf, Vector())
+    for ang in range(8, 97, 8):
+        for d in dirs:
+            v = d * ang
+            Ts[hand] = base @ _hand_tilt(v.x, v.y)
+            depth = _blade_depth(fk(Ts, Matrix.Identity(4)), blade)
+            if depth < low[0]:
+                low = (depth, v)
+            if depth < 0.02:
+                best = v
+                break
+        if best is not None:
+            break
+    Ts[hand] = base
+    return best if best is not None else low[1]
+
+
 def _smooth_pushes(rows, radius=6, sigma=3.0):
     n = len(rows)
     dil = []
@@ -815,6 +872,30 @@ def evaluate(tl, fps=rc.SCENE_FPS):
             pushes[side] = [a + b for a, b in zip(pushes[side], _smooth_pushes(extra[side]))]
     tl.arm_push = {s: [round(v.length, 3) for v in pushes[s][warm:]] for s in sides}
 
+    # lâmina atravessando o corpo: gira o pulso o mínimo pra tirar, suavizado no tempo
+    blades = [] if tl.blade_hidden else [("EmberBlade", "RightHand")]
+    if tl.dual:
+        blades.append(("AzureBlade", "LeftHand"))
+    tilts = {b: [Vector() for _ in frame_list] for b, _ in blades}
+    if blades:
+        raw = {b: [] for b, _ in blades}
+        prev = {b: Vector() for b, _ in blades}
+        tw = {s: None for s in sides}
+        for i, f in enumerate(frame_list):
+            fe = max(f, tl.frame_start)
+            Ts, _ = _body_pose(tl, fe)
+            for side in sides:
+                grip, r_t, pole = _arm_controls(tl, side, fe)
+                tw[side] = _arm_solve(side, grip, r_t, pole, Ts, pushes[side][i], tw[side])
+            for b, hand in blades:
+                need = _blade_need(Ts, b, hand, prev[b]) if tl.blade_visible(b, fe) else Vector()
+                raw[b].append(need)
+                if need.length > 1e-3:
+                    prev[b] = need
+        for b, _ in blades:
+            tilts[b] = _smooth_pushes(raw[b], radius=5, sigma=2.5)
+    tl.blade_tilt = {b: [round(v.length, 1) for v in tilts[b][warm:]] for b in tilts}
+
     frames = []
     scarf = ScarfSim(**tl.scarf_params) if tl.scarf_params is not None else None
     dt = 1.0 / fps
@@ -825,6 +906,10 @@ def evaluate(tl, fps=rc.SCENE_FPS):
         for side in sides:
             grip, r_t, pole = _arm_controls(tl, side, fe)
             twist[side] = _arm_solve(side, grip, r_t, pole, Ts, pushes[side][i], twist[side])
+        for b, hand in blades:
+            v = tilts[b][i]
+            if v.length > 1e-3:
+                Ts[hand] = Ts[hand] @ _hand_tilt(v.x, v.y)
         world = fk(Ts, root)
         if not any(lo <= fe <= hi for lo, hi in tl.blade_ground_ok):
             blades = (
