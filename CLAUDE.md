@@ -39,6 +39,26 @@ Guia de instalação local: `docs/COMO_CONTINUAR.md`.
 
 Se o orçamento estiver curto: versão menor (~15 s, 8 golpes) reaproveitando as camadas de VFX que já existem.
 
+## Criar uma habilidade nova
+
+Use a ATOMIC como modelo (`SCRIPTS/blender/abilities/anim_01_atomic_eclipse.py`). Nome do arquivo: `anim_NN_nome.py`.
+
+1. Arquivo da habilidade com `META` (id, name `ANIM_NN_NOME`, câmera), `build()` que monta a `ae.Timeline` usando os
+   movimentos de `moves.py` e marca os markers (`tl.marker`), `CUES` (efeitos, com `emit`/`part`/`ring`/... de
+   `vfx_cues.py`) e `HITS` (dano no servidor: radius, damage, knockback, lift).
+2. Mostrar ao dono poucos frames antes de fazer VFX (`run_ability.py -- anim_NN_nome --frames=a,b,c --novfx --lowres`).
+3. `run_ability.py -- anim_NN_nome --export` e `check_motion.py` limpos.
+4. `kfs_builder.py ANIM_NN_NOME`, `build_kfs.luau ANIM_NN_NOME`, `gen_ability_data.py ANIM_NN_NOME` (o módulo entra sozinho
+   em `ROBLOX/src/shared/Abilities`).
+5. Registrar em `ROBLOX/src/shared/Config.luau` (`Config.Abilities.<Nome> = { key = ..., cooldown = ... }`, sem isso o
+   servidor ignora o cast) e em `Assets.luau` (`Animations.ANIM_NN_NOME = ""`).
+6. `build_kit.luau`, `test_runtime.luau`, `props_used.py` + `check_props.luau`, luau-lsp.
+7. Pacote: o `build_packs.luau` hoje está fixo na ATOMIC (`ANIM`, `NAME`, `OUT` e o README em `ROBLOX/packs`). Parametrizar
+   antes de usar em outra.
+8. `docs/<NOME>.md`, tabela do README e a tabela de estado aqui.
+
+Começar curto (10–15 s) e pedir aprovação por etapa: coreografia, depois VFX, depois export.
+
 ## Coisas que já custaram caro descobrir
 
 - Braço R15: o pivô do ombro fica em (±1, 0.563, 0) no espaço do UpperTorso e o pulso alcança só ~1.57 studs. Manter a
