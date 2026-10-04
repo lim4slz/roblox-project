@@ -39,6 +39,11 @@ Pick the version you need. You don't have to install more than one.
 BEFORE YOU START
 ----------------
 
+- .rbxm files don't open with a double click. Open Roblox Studio first, open your game (or
+  any place), then drag the .rbxm into the Studio window. You can also right click Workspace
+  in the Explorer > Insert from File... and pick the file.
+- The .rbxl (the demo) is a whole place. Open it with File > Open from File... in Studio, or
+  double click it if Windows already opens .rbxl files with Studio.
 - Your game has to use R15 avatars: Game Settings > Avatar > Avatar Type > R15.
 - Roblox only plays animations owned by the game's owner. If the game belongs to a group,
   publish the animation to that group. If it's your own game, publish it to your account.
