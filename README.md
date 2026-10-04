@@ -15,6 +15,8 @@ Os nomes e a execução são próprios. As obras citadas são só referência de
 
 Detalhes da ATOMIC ECLIPSE: [docs/ATOMIC_ECLIPSE.md](docs/ATOMIC_ECLIPSE.md)
 
+Pra continuar no seu PC (o que instalar e como): [docs/COMO_CONTINUAR.md](docs/COMO_CONTINUAR.md)
+
 ## Testar rápido
 
 1. Abra `ROBLOX/build/EmberAbilities_Test.rbxl` no Roblox Studio.
