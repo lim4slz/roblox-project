@@ -1,0 +1,45 @@
+{
+ "frames": [
+  0,
+  1920
+ ],
+ "depth_tolerance": 0.12,
+ "arm_vs_body_tolerance": 0.2,
+ "spin_threshold_deg_per_frame": 18.0,
+ "interpenetration": {
+  "LeftLowerArm|UpperTorso": {
+   "ranges": [
+    [
+     1171,
+     1174
+    ],
+    [
+     1183,
+     1188
+    ]
+   ],
+   "max_depth": 0.229
+  },
+  "RightLowerArm|UpperTorso": {
+   "ranges": [
+    [
+     1554,
+     1564
+    ]
+   ],
+   "max_depth": 0.231
+  }
+ },
+ "rotation_over_40_frames_gt_200deg": {},
+ "fast_joint_rotation": {
+  "LeftLowerArm": {
+   "ranges": [
+    [
+     1177,
+     1177
+    ]
+   ],
+   "max_deg": 29.1
+  }
+ }
+}

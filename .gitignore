@@ -1,0 +1,12 @@
+# caches e arquivos gerados que dá pra refazer
+_cache/
+_archive/
+__pycache__/
+*.pyc
+*.blend1
+REFERENCE/_tmp_*/
+ROBLOX/sourcemap.json
+
+# trabalho em andamento das próximas habilidades
+SCRIPTS/blender/_wip/
+.claude/

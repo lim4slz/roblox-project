@@ -1,0 +1,12 @@
+{
+  "addon_version": "3.0.1",
+  "keyframes": 1921,
+  "frames_expected": 1921,
+  "duration_s": 32.0,
+  "poses_checked": 40341,
+  "max_abs_component_error": 7.748603820800781e-07,
+  "missing_nonidentity_poses": 0,
+  "easing_styles": [
+    "Linear"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "ANIM_01_ATOMIC_ECLIPSE",
+  "dense_keyframes": 1921,
+  "kept_keyframes": 1523,
+  "reduction_pct": 20.7,
+  "tolerance": {
+    "rot_deg": 0.35,
+    "pos_studs": 0.006
+  },
+  "validation_samples": 80661,
+  "max_rot_error_deg": 0.3492,
+  "max_rot_error_at": [
+    25.8667,
+    "LeftHand"
+  ],
+  "max_pos_error_studs": 0.00098,
+  "markers": 44,
+  "marker_frames_kept": true,
+  "bones": [
+    "AzureBlade",
+    "EmberBlade",
+    "Head",
+    "LeftFoot",
+    "LeftHand",
+    "LeftLowerArm",
+    "LeftLowerLeg",
+    "LeftUpperArm",
+    "LeftUpperLeg",
+    "LowerTorso",
+    "RightFoot",
+    "RightHand",
+    "RightLowerArm",
+    "RightLowerLeg",
+    "RightUpperArm",
+    "RightUpperLeg",
+    "Scarf1",
+    "Scarf2",
+    "Scarf3",
+    "Scarf4",
+    "UpperTorso"
+  ]
+}

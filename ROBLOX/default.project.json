@@ -1,0 +1,26 @@
+{
+  "name": "EmberAbilities",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Ember": {
+        "$path": "src/shared",
+        "KeyframeSequences": {
+          "$path": "../EXPORT/KeyframeSequences"
+        }
+      }
+    },
+    "ServerScriptService": {
+      "EmberServer": {
+        "$path": "src/server"
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "EmberClient": {
+          "$path": "src/client"
+        }
+      }
+    }
+  }
+}

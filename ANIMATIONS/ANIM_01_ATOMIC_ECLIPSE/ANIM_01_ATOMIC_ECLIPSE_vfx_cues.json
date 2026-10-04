@@ -1,0 +1,5195 @@
+{
+  "name": "ANIM_01_ATOMIC_ECLIPSE",
+  "palette": {
+    "CORE": [
+      255,
+      248,
+      230
+    ],
+    "GOLD": [
+      255,
+      196,
+      64
+    ],
+    "EMBER": [
+      255,
+      120,
+      24
+    ],
+    "CRIMSON": [
+      214,
+      38,
+      30
+    ],
+    "VIOLET": [
+      150,
+      70,
+      255
+    ],
+    "LILAC": [
+      205,
+      160,
+      255
+    ],
+    "VOID": [
+      60,
+      16,
+      110
+    ],
+    "ABYSS": [
+      24,
+      6,
+      46
+    ],
+    "ASH": [
+      46,
+      40,
+      44
+    ],
+    "DUST": [
+      120,
+      108,
+      112
+    ],
+    "STONE": [
+      88,
+      80,
+      86
+    ],
+    "INK": [
+      8,
+      6,
+      10
+    ],
+    "WHITE": [
+      255,
+      255,
+      255
+    ],
+    "AZURE": [
+      70,
+      160,
+      255
+    ],
+    "CYAN": [
+      130,
+      235,
+      255
+    ],
+    "ELECTRIC": [
+      150,
+      200,
+      255
+    ],
+    "STORM": [
+      40,
+      40,
+      70
+    ],
+    "WIND": [
+      200,
+      240,
+      255
+    ],
+    "BLUEFLAME": [
+      120,
+      120,
+      255
+    ]
+  },
+  "cues": [
+    {
+      "marker": "CAST_START",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": null,
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "lifetime": 2.0,
+            "release": 0.0,
+            "brightness": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                -0.05
+              ]
+            ],
+            "saturation": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                -0.12
+              ]
+            ],
+            "contrast": 0.0,
+            "kind": "screen",
+            "hold": 7.4667
+          }
+        ]
+      },
+      "frame": 2,
+      "time": 0.0333
+    },
+    {
+      "marker": "CIRCUITS_START",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "character",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "count": 6,
+            "color": "VIOLET",
+            "kind": "circuits",
+            "duration": 17.1667
+          },
+          {
+            "anchor": "LowerTorso",
+            "shape": "ball",
+            "look": "smoke",
+            "rate": 16,
+            "spawn": {
+              "shape": "box",
+              "box": [
+                1.8,
+                2.8,
+                1.2
+              ]
+            },
+            "dir": "up",
+            "spread": 20,
+            "speed": [
+              1.5,
+              3.2
+            ],
+            "drag": 1.0,
+            "accel": [
+              0,
+              1.2,
+              0
+            ],
+            "lifetime": [
+              0.9,
+              1.5
+            ],
+            "size": [
+              [
+                0,
+                0.3
+              ],
+              [
+                0.4,
+                1.0
+              ],
+              [
+                1,
+                1.5
+              ]
+            ],
+            "env": 0.3,
+            "transparency": [
+              [
+                0,
+                1
+              ],
+              [
+                0.2,
+                0.55
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "VOID"
+              ],
+              [
+                0.5,
+                "ABYSS"
+              ],
+              [
+                1,
+                "INK"
+              ]
+            ],
+            "kind": "part",
+            "duration": 5.6667
+          },
+          {
+            "anchor": "LowerTorso",
+            "shape": "ball",
+            "rate": 10,
+            "spawn": {
+              "shape": "box",
+              "box": [
+                2.2,
+                3.4,
+                1.4
+              ]
+            },
+            "dir": "up",
+            "spread": 15,
+            "speed": [
+              1.0,
+              2.5
+            ],
+            "lifetime": [
+              1.0,
+              1.8
+            ],
+            "size": [
+              [
+                0.0,
+                0.16
+              ],
+              [
+                1.0,
+                0.04
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.2,
+                0.0
+              ],
+              [
+                0.6,
+                0.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ],
+            "kind": "part",
+            "duration": 5.6667
+          },
+          {
+            "anchor": "blade_tip",
+            "shape": "block",
+            "rate": 18,
+            "dir": [
+              0,
+              1,
+              0.6
+            ],
+            "spread": 55,
+            "speed": [
+              5,
+              11
+            ],
+            "drag": 1.5,
+            "accel": [
+              0,
+              -45,
+              0
+            ],
+            "lifetime": [
+              0.25,
+              0.5
+            ],
+            "size": [
+              [
+                0.0,
+                0.13
+              ],
+              [
+                1.0,
+                0.03
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.4,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 5.6667
+          },
+          {
+            "anchor": "blade_tip",
+            "shape": "block",
+            "snap": "ground",
+            "rate": 22,
+            "lifetime": 1.6,
+            "size": [
+              [
+                0.0,
+                0.22
+              ],
+              [
+                1.0,
+                0.1
+              ]
+            ],
+            "aspect": [
+              0.6,
+              0.08,
+              1.4
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VOID"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                0.6,
+                0.5
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 5.6667
+          }
+        ]
+      },
+      "frame": 10,
+      "time": 0.1667
+    },
+    {
+      "marker": "STEP_SIGIL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.4
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.4,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.35
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 7,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              3,
+              6
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 10,
+            "dir": "up",
+            "spread": 70,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.3,
+              0.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "disc",
+              "radius": 0.8
+            },
+            "kind": "part"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.35,
+            "color": "VIOLET",
+            "offset": [
+              0,
+              0.6,
+              0
+            ],
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 78,
+      "time": 1.3
+    },
+    {
+      "marker": "STEP_SIGIL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.4
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.4,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.35
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 7,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              3,
+              6
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 10,
+            "dir": "up",
+            "spread": 70,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.3,
+              0.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "disc",
+              "radius": 0.8
+            },
+            "kind": "part"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.35,
+            "color": "VIOLET",
+            "offset": [
+              0,
+              0.6,
+              0
+            ],
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 134,
+      "time": 2.2333
+    },
+    {
+      "marker": "STEP_SIGIL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.4
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.4,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.35
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 7,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              3,
+              6
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 10,
+            "dir": "up",
+            "spread": 70,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.3,
+              0.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "disc",
+              "radius": 0.8
+            },
+            "kind": "part"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.35,
+            "color": "VIOLET",
+            "offset": [
+              0,
+              0.6,
+              0
+            ],
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 190,
+      "time": 3.1667
+    },
+    {
+      "marker": "STEP_SIGIL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.4
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.4,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.35
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 7,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              3,
+              6
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 10,
+            "dir": "up",
+            "spread": 70,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.3,
+              0.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "disc",
+              "radius": 0.8
+            },
+            "kind": "part"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.35,
+            "color": "VIOLET",
+            "offset": [
+              0,
+              0.6,
+              0
+            ],
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 246,
+      "time": 4.1
+    },
+    {
+      "marker": "STEP_SIGIL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.4
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.4,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  0.6
+                ],
+                [
+                  1.0,
+                  4.5
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.35
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 7,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              3,
+              6
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 10,
+            "dir": "up",
+            "spread": 70,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.3,
+              0.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "disc",
+              "radius": 0.8
+            },
+            "kind": "part"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.35,
+            "color": "VIOLET",
+            "offset": [
+              0,
+              0.6,
+              0
+            ],
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 302,
+      "time": 5.0333
+    },
+    {
+      "marker": "AWAKEN",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "Head",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "hiball",
+            "lifetime": 0.25,
+            "size": [
+              [
+                0.0,
+                0.15
+              ],
+              [
+                1.0,
+                1.3
+              ]
+            ],
+            "color": "CORE",
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "offset": [
+              0.0,
+              0.1,
+              -0.62
+            ],
+            "kind": "animate"
+          },
+          {
+            "shape": "cube",
+            "lifetime": 0.35,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  0.1
+                ],
+                [
+                  1.0,
+                  4.0
+                ]
+              ],
+              0.04,
+              0.04
+            ],
+            "offset": [
+              0.0,
+              0.12,
+              -0.66
+            ],
+            "color": "LILAC",
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "animate"
+          },
+          {
+            "anchor": "feet",
+            "radius": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                7.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.6
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.55,
+            "color": "VIOLET",
+            "kind": "ring"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 16,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              6,
+              10
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                2.0
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "anchor": "feet",
+            "kind": "part"
+          },
+          {
+            "anchor": "character",
+            "color": "VIOLET",
+            "fill": 0.85,
+            "outline": 0.0,
+            "kind": "highlight",
+            "duration": 13.7667
+          },
+          {
+            "mode": "white",
+            "lifetime": 0.18,
+            "alpha": [
+              [
+                0.0,
+                0.18
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "kind": "flash"
+          }
+        ]
+      },
+      "frame": 350,
+      "time": 5.8333
+    },
+    {
+      "marker": "CONVERGE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "chest",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "block",
+            "rate": 28,
+            "spawn": {
+              "shape": "shell",
+              "radius": 34
+            },
+            "dir": "in",
+            "speed": [
+              38,
+              46
+            ],
+            "lifetime": [
+              0.75,
+              0.85
+            ],
+            "size": 0.12,
+            "aspect": [
+              0.5,
+              1,
+              0.5
+            ],
+            "rot": "velocity",
+            "stretch": 5,
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                0.6,
+                "VIOLET"
+              ],
+              [
+                1,
+                "CORE"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                1
+              ],
+              [
+                0.25,
+                0.15
+              ],
+              [
+                0.9,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 9.5
+          },
+          {
+            "shape": "ball",
+            "rate": 6,
+            "spawn": {
+              "shape": "shell",
+              "radius": 14
+            },
+            "dir": "in",
+            "speed": [
+              3,
+              6
+            ],
+            "lifetime": [
+              2.0,
+              2.6
+            ],
+            "size": [
+              [
+                0.0,
+                0.25
+              ],
+              [
+                1.0,
+                0.6
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.25,
+                0.2
+              ],
+              [
+                0.7,
+                0.2
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ],
+            "kind": "part",
+            "duration": 10.3333
+          },
+          {
+            "rate": 2.5,
+            "target": "around",
+            "length": [
+              2.0,
+              4.5
+            ],
+            "lifetime": [
+              0.08,
+              0.16
+            ],
+            "flicker": 0.04,
+            "width": 0.05,
+            "color": "LILAC",
+            "forks": 1,
+            "kind": "lightning",
+            "duration": 5.6667
+          }
+        ]
+      },
+      "frame": 420,
+      "time": 7.0
+    },
+    {
+      "marker": "SIGIL_GROUND",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "1",
+      "params": {
+        "layers": [
+          {
+            "radius": 8.0,
+            "color": "VIOLET",
+            "spin": 24,
+            "spokes": 12,
+            "rings": 3,
+            "implode_at": 17.3333,
+            "kind": "sigil",
+            "duration": 12.4333
+          },
+          {
+            "shape": "cylinder",
+            "count": 12,
+            "spawn": {
+              "shape": "ring",
+              "radius": 8.0
+            },
+            "offset": [
+              0,
+              3.0,
+              0
+            ],
+            "lifetime": [
+              1.0,
+              1.4
+            ],
+            "size": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.15,
+                1.0
+              ],
+              [
+                1,
+                0.6
+              ]
+            ],
+            "aspect": [
+              0.18,
+              6.0,
+              0.18
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                7.0
+              ],
+              [
+                1.0,
+                9.5
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.6
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.6,
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "shape": "rock",
+            "look": "rock",
+            "count": 26,
+            "spawn": {
+              "shape": "disc",
+              "radius": [
+                4,
+                22
+              ]
+            },
+            "snap": "ground",
+            "dir": "up",
+            "spread": 10,
+            "speed": [
+              0.5,
+              1.4
+            ],
+            "drag": 0.3,
+            "accel": [
+              0,
+              0.22,
+              0
+            ],
+            "size": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.03,
+                1.0
+              ],
+              [
+                0.955,
+                1.0
+              ],
+              [
+                1,
+                0.0
+              ]
+            ],
+            "env": 0.55,
+            "aspect": [
+              1.0,
+              0.7,
+              0.9
+            ],
+            "spin": [
+              15,
+              60
+            ],
+            "color": "STONE",
+            "pull": 260,
+            "pull_to": "hands",
+            "pull_at": 17.3333,
+            "kind": "part",
+            "lifetime": 10.5
+          }
+        ]
+      },
+      "frame": 430,
+      "time": 7.1667
+    },
+    {
+      "marker": "DIM",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": null,
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "lifetime": 4.0,
+            "release": 0.0,
+            "brightness": [
+              [
+                0.0,
+                -0.05
+              ],
+              [
+                1.0,
+                -0.15
+              ]
+            ],
+            "saturation": [
+              [
+                0.0,
+                -0.12
+              ],
+              [
+                1.0,
+                -0.35
+              ]
+            ],
+            "contrast": 0.0,
+            "kind": "screen",
+            "hold": 9.8333
+          }
+        ]
+      },
+      "frame": 450,
+      "time": 7.5
+    },
+    {
+      "marker": "SIGIL_GROUND",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "2",
+      "params": {
+        "layers": [
+          {
+            "radius": 14.0,
+            "color": "CORE",
+            "spin": -14,
+            "spokes": 16,
+            "rings": 2,
+            "implode_at": 17.3333,
+            "kind": "sigil",
+            "duration": 10.9333
+          },
+          {
+            "shape": "cylinder",
+            "count": 16,
+            "spawn": {
+              "shape": "ring",
+              "radius": 14.0
+            },
+            "offset": [
+              0,
+              4.0,
+              0
+            ],
+            "lifetime": [
+              1.0,
+              1.4
+            ],
+            "size": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.15,
+                1.0
+              ],
+              [
+                1,
+                0.6
+              ]
+            ],
+            "aspect": [
+              0.2,
+              8.0,
+              0.2
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                13.0
+              ],
+              [
+                1.0,
+                16.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.7
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.6,
+            "color": "LILAC",
+            "kind": "ring"
+          },
+          {
+            "shape": "rock",
+            "look": "rock",
+            "count": 22,
+            "spawn": {
+              "shape": "disc",
+              "radius": [
+                6,
+                26
+              ]
+            },
+            "snap": "ground",
+            "dir": "up",
+            "spread": 10,
+            "speed": [
+              0.6,
+              1.6
+            ],
+            "drag": 0.3,
+            "accel": [
+              0,
+              0.25,
+              0
+            ],
+            "size": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.03,
+                1.0
+              ],
+              [
+                0.955,
+                1.0
+              ],
+              [
+                1,
+                0.0
+              ]
+            ],
+            "env": 0.55,
+            "aspect": [
+              0.9,
+              0.6,
+              1.1
+            ],
+            "spin": [
+              15,
+              60
+            ],
+            "color": "STONE",
+            "pull": 260,
+            "pull_to": "hands",
+            "pull_at": 17.3333,
+            "kind": "part",
+            "lifetime": 9.0
+          }
+        ]
+      },
+      "frame": 520,
+      "time": 8.6667
+    },
+    {
+      "marker": "SIGIL_GROUND",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "3",
+      "params": {
+        "layers": [
+          {
+            "radius": 20.0,
+            "color": "VIOLET",
+            "spin": 9,
+            "spokes": 24,
+            "rings": 3,
+            "implode_at": 17.3333,
+            "kind": "sigil",
+            "duration": 9.6
+          },
+          {
+            "shape": "cylinder",
+            "count": 20,
+            "spawn": {
+              "shape": "ring",
+              "radius": 20.0
+            },
+            "offset": [
+              0,
+              5.0,
+              0
+            ],
+            "lifetime": [
+              1.0,
+              1.4
+            ],
+            "size": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.15,
+                1.0
+              ],
+              [
+                1,
+                0.6
+              ]
+            ],
+            "aspect": [
+              0.22,
+              10.0,
+              0.22
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                19.0
+              ],
+              [
+                1.0,
+                23.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.8
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.6,
+            "color": "VIOLET",
+            "kind": "ring"
+          }
+        ]
+      },
+      "frame": 600,
+      "time": 10.0
+    },
+    {
+      "marker": "LEVITATE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                10.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.9
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.65,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 0.6,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  9.0
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  9.0
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "kind": "animate"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 20,
+            "spawn": {
+              "shape": "ring",
+              "radius": 1.0
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              8,
+              13
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.8,
+              1.3
+            ],
+            "size": [
+              [
+                0.0,
+                0.6
+              ],
+              [
+                1.0,
+                2.4
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          },
+          {
+            "anchor": "LeftFoot",
+            "shape": "ball",
+            "rate": 14,
+            "dir": "down",
+            "spread": 25,
+            "speed": [
+              2,
+              4
+            ],
+            "lifetime": [
+              0.4,
+              0.7
+            ],
+            "size": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                0.08
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VOID"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0.1
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 7.1333
+          },
+          {
+            "anchor": "RightFoot",
+            "shape": "ball",
+            "rate": 14,
+            "dir": "down",
+            "spread": 25,
+            "speed": [
+              2,
+              4
+            ],
+            "lifetime": [
+              0.4,
+              0.7
+            ],
+            "size": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                0.08
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VOID"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0.1
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 7.1333
+          }
+        ]
+      },
+      "frame": 612,
+      "time": 10.2
+    },
+    {
+      "marker": "HALO",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "UpperTorso",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": 3.6,
+            "color": "VIOLET",
+            "kind": "halo",
+            "duration": 4.6667
+          },
+          {
+            "shape": "ball",
+            "rate": 34,
+            "link": "follow",
+            "offset": [
+              0,
+              0.7,
+              1.3
+            ],
+            "spawn": {
+              "shape": "vring",
+              "radius": 3.6
+            },
+            "dir": "radial",
+            "spread": 12,
+            "speed": [
+              2,
+              5
+            ],
+            "drag": 1.2,
+            "lifetime": [
+              0.45,
+              0.8
+            ],
+            "size": [
+              [
+                0.0,
+                0.28
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.4,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0.05
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part",
+            "duration": 4.6667
+          },
+          {
+            "rate": 7,
+            "target": "around",
+            "length": [
+              2.5,
+              5.5
+            ],
+            "lifetime": [
+              0.08,
+              0.18
+            ],
+            "flicker": 0.04,
+            "width": 0.06,
+            "color": "LILAC",
+            "forks": 2,
+            "anchor": "chest",
+            "kind": "lightning",
+            "duration": 4.6667
+          }
+        ]
+      },
+      "frame": 760,
+      "time": 12.6667
+    },
+    {
+      "marker": "HELIX",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "character",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "count": 3,
+            "radius": 3.2,
+            "height": 7.5,
+            "color": "VIOLET",
+            "kind": "helix",
+            "duration": 4.0
+          }
+        ]
+      },
+      "frame": 800,
+      "time": 13.3333
+    },
+    {
+      "marker": "ORBS",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "chest",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "count": 6,
+            "radius": 4.2,
+            "color": "CORE",
+            "kind": "orbs",
+            "duration": 3.6667
+          }
+        ]
+      },
+      "frame": 820,
+      "time": 13.6667
+    },
+    {
+      "marker": "CHARGE_PEAK",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "hiball",
+            "lifetime": 0.25,
+            "size": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                5.0
+              ]
+            ],
+            "color": "CORE",
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "animate"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                6.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.3,
+            "orient": "facing",
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "anchor": "feet",
+            "radius": [
+              [
+                0.0,
+                2.0
+              ],
+              [
+                1.0,
+                32.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                1.2
+              ],
+              [
+                1.0,
+                0.1
+              ]
+            ],
+            "lifetime": 0.7,
+            "color": "LILAC",
+            "kind": "ring"
+          },
+          {
+            "shape": "block",
+            "count": 46,
+            "dir": "radial",
+            "spread": 180,
+            "speed": [
+              14,
+              26
+            ],
+            "drag": 1.2,
+            "accel": [
+              0,
+              -40,
+              0
+            ],
+            "lifetime": [
+              0.35,
+              0.7
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.028000000000000004
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "spawn": {
+              "shape": "sphere",
+              "radius": 0.5
+            },
+            "kind": "part"
+          },
+          {
+            "amplitude": [
+              [
+                0.0,
+                0.35
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "frequency": 26,
+            "lifetime": 0.6,
+            "falloff": 200,
+            "kind": "shake"
+          },
+          {
+            "mode": "white",
+            "lifetime": 0.25,
+            "alpha": [
+              [
+                0.0,
+                0.35
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "kind": "flash"
+          },
+          {
+            "range": 24,
+            "brightness": [
+              [
+                0.0,
+                1.4
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.4,
+            "color": "LILAC",
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 990,
+      "time": 16.5
+    },
+    {
+      "marker": "BLADE_DISSOLVE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "blade_base",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "visible": false,
+            "fade": 0.3,
+            "kind": "blade"
+          },
+          {
+            "shape": "block",
+            "count": 70,
+            "spawn": {
+              "shape": "segment",
+              "to": "blade_tip",
+              "radius": 0.08
+            },
+            "spread": 180,
+            "speed": [
+              0.5,
+              2.5
+            ],
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.16
+              ],
+              [
+                1.0,
+                0.04
+              ]
+            ],
+            "aspect": [
+              1,
+              1,
+              1
+            ],
+            "rot": "random",
+            "spin": [
+              90,
+              360
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.4,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "pull": 80,
+            "pull_to": "hands",
+            "kind": "part"
+          },
+          {
+            "range": 8,
+            "brightness": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.5,
+            "color": "LILAC",
+            "anchor": "blade_mid",
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 1000,
+      "time": 16.6667
+    },
+    {
+      "marker": "IMPLODE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                22.0
+              ],
+              [
+                1.0,
+                0.2
+              ]
+            ],
+            "width": [
+              [
+                0,
+                0.4
+              ],
+              [
+                1,
+                1.4
+              ]
+            ],
+            "lifetime": 0.22,
+            "color": [
+              [
+                0,
+                "VIOLET"
+              ],
+              [
+                1,
+                "CORE"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.6
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "block",
+            "count": 110,
+            "spawn": {
+              "shape": "shell",
+              "radius": 18
+            },
+            "dir": "in",
+            "speed": [
+              50,
+              70
+            ],
+            "lifetime": [
+              0.26,
+              0.34
+            ],
+            "size": 0.14,
+            "aspect": [
+              0.5,
+              1,
+              0.5
+            ],
+            "rot": "velocity",
+            "stretch": 6,
+            "color": [
+              [
+                0,
+                "VIOLET"
+              ],
+              [
+                1,
+                "CORE"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.6
+              ],
+              [
+                0.8,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                7.0
+              ],
+              [
+                1.0,
+                0.3
+              ]
+            ],
+            "lifetime": 0.3,
+            "transparency": [
+              [
+                0,
+                0.3
+              ],
+              [
+                1,
+                0.7
+              ]
+            ],
+            "kind": "distort"
+          },
+          {
+            "lifetime": 0.25,
+            "release": 0.0,
+            "brightness": [
+              [
+                0.0,
+                -0.15
+              ],
+              [
+                1.0,
+                -0.45
+              ]
+            ],
+            "saturation": [
+              [
+                0.0,
+                -0.35
+              ],
+              [
+                1.0,
+                -0.6
+              ]
+            ],
+            "contrast": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                0.25
+              ]
+            ],
+            "kind": "screen",
+            "hold": 2.2667
+          },
+          {
+            "amplitude": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "frequency": 30,
+            "lifetime": 0.35,
+            "falloff": 200,
+            "kind": "shake"
+          }
+        ]
+      },
+      "frame": 1040,
+      "time": 17.3333
+    },
+    {
+      "marker": "SILENCE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "kind": "point",
+            "duration": 1.9333
+          },
+          {
+            "shape": "ball",
+            "rate": 10,
+            "spawn": {
+              "shape": "shell",
+              "radius": 1.2
+            },
+            "dir": "in",
+            "speed": [
+              1.0,
+              1.8
+            ],
+            "lifetime": [
+              0.6,
+              0.9
+            ],
+            "size": [
+              [
+                0.0,
+                0.08
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "color": "CORE",
+            "transparency": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.3,
+                0.0
+              ],
+              [
+                0.7,
+                0.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ],
+            "kind": "part",
+            "duration": 1.9333
+          }
+        ]
+      },
+      "frame": 1060,
+      "time": 17.6667
+    },
+    {
+      "marker": "POINT_PULSE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.8
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.32,
+            "orient": "facing",
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "range": 16,
+            "brightness": [
+              [
+                0.0,
+                0.8
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.25,
+            "color": "CORE",
+            "kind": "light"
+          },
+          {
+            "lifetime": 0.2,
+            "brightness": [
+              [
+                0.0,
+                0.06
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "kind": "screen"
+          }
+        ]
+      },
+      "frame": 1080,
+      "time": 18.0
+    },
+    {
+      "marker": "POINT_PULSE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.8
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.32,
+            "orient": "facing",
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "range": 16,
+            "brightness": [
+              [
+                0.0,
+                0.8
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.25,
+            "color": "CORE",
+            "kind": "light"
+          },
+          {
+            "lifetime": 0.2,
+            "brightness": [
+              [
+                0.0,
+                0.06
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "kind": "screen"
+          }
+        ]
+      },
+      "frame": 1110,
+      "time": 18.5
+    },
+    {
+      "marker": "POINT_PULSE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                3.8
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                0.02
+              ]
+            ],
+            "lifetime": 0.32,
+            "orient": "facing",
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "range": 16,
+            "brightness": [
+              [
+                0.0,
+                0.8
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.25,
+            "color": "CORE",
+            "kind": "light"
+          },
+          {
+            "lifetime": 0.2,
+            "brightness": [
+              [
+                0.0,
+                0.06
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "kind": "screen"
+          }
+        ]
+      },
+      "frame": 1140,
+      "time": 19.0
+    },
+    {
+      "marker": "RELEASE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "mode": "invert",
+            "lifetime": 0.05,
+            "alpha": 1.0,
+            "kind": "flash"
+          },
+          {
+            "mode": "black",
+            "delay": 0.05,
+            "lifetime": 0.05,
+            "alpha": 1.0,
+            "kind": "flash"
+          },
+          {
+            "mode": "white",
+            "delay": 0.1,
+            "lifetime": 1.2,
+            "alpha": [
+              [
+                0,
+                1.0
+              ],
+              [
+                0.1,
+                0.5
+              ],
+              [
+                0.4,
+                0.15
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "kind": "flash"
+          },
+          {
+            "amplitude": [
+              [
+                0,
+                3.5
+              ],
+              [
+                0.3,
+                2.0
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "frequency": 18,
+            "rot": 1.5,
+            "lifetime": 2.4,
+            "falloff": 600,
+            "kind": "shake"
+          },
+          {
+            "lifetime": 3.5,
+            "release": 2.5,
+            "brightness": [
+              [
+                0,
+                0.08
+              ],
+              [
+                1,
+                0.03
+              ]
+            ],
+            "saturation": [
+              [
+                0,
+                0.3
+              ],
+              [
+                1,
+                0.15
+              ]
+            ],
+            "contrast": 0.0,
+            "kind": "screen",
+            "hold": 6.4
+          },
+          {
+            "delta": 12,
+            "lifetime": 0.9,
+            "kind": "fov"
+          }
+        ]
+      },
+      "frame": 1176,
+      "time": 19.6
+    },
+    {
+      "marker": "NUKE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "hands",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "hiball",
+            "lifetime": 3.0,
+            "size": [
+              [
+                0,
+                1.0
+              ],
+              [
+                0.15,
+                44.0
+              ],
+              [
+                1,
+                50.0
+              ]
+            ],
+            "color": "CORE",
+            "transparency": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.12,
+                0.35
+              ],
+              [
+                0.4,
+                0.8
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "intensity": 0.6,
+            "kind": "animate"
+          },
+          {
+            "shape": "hiball",
+            "lifetime": 5.2,
+            "size": [
+              [
+                0,
+                2.0
+              ],
+              [
+                0.28,
+                112.0
+              ],
+              [
+                0.5,
+                120.0
+              ],
+              [
+                1,
+                124.0
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                0.3,
+                "VIOLET"
+              ],
+              [
+                1,
+                "VOID"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                0.4,
+                0.72
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "intensity": 0.35,
+            "kind": "animate"
+          },
+          {
+            "shape": "hiball",
+            "lifetime": 5.0,
+            "size": [
+              [
+                0,
+                4.0
+              ],
+              [
+                0.25,
+                128.0
+              ],
+              [
+                1,
+                136.0
+              ]
+            ],
+            "color": "LILAC",
+            "transparency": [
+              [
+                0,
+                0.8
+              ],
+              [
+                0.5,
+                0.92
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "spin": [
+              0,
+              40,
+              0
+            ],
+            "intensity": 0.3,
+            "kind": "animate"
+          },
+          {
+            "shape": "hiball",
+            "count": 36,
+            "spawn": {
+              "shape": "sphere",
+              "radius": [
+                0,
+                18
+              ]
+            },
+            "dir": "radial",
+            "spread": 30,
+            "speed": [
+              14,
+              30
+            ],
+            "drag": 1.4,
+            "lifetime": [
+              1.6,
+              2.6
+            ],
+            "size": [
+              [
+                0.0,
+                6.0
+              ],
+              [
+                1.0,
+                15.0
+              ]
+            ],
+            "env": 0.3,
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                0.3,
+                "VIOLET"
+              ],
+              [
+                1,
+                "VOID"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.65
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "intensity": 0.4,
+            "kind": "part"
+          },
+          {
+            "shape": "block",
+            "count": 130,
+            "spawn": {
+              "shape": "sphere",
+              "radius": 2
+            },
+            "dir": "radial",
+            "spread": 180,
+            "speed": [
+              60,
+              110
+            ],
+            "drag": 0.8,
+            "lifetime": [
+              0.6,
+              1.2
+            ],
+            "size": [
+              [
+                0.0,
+                0.35
+              ],
+              [
+                1.0,
+                0.1
+              ]
+            ],
+            "aspect": [
+              0.4,
+              1,
+              0.4
+            ],
+            "rot": "velocity",
+            "stretch": 5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.4,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                6.0
+              ],
+              [
+                1.0,
+                95.0
+              ]
+            ],
+            "lifetime": 0.9,
+            "transparency": [
+              [
+                0,
+                0.15
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "distort"
+          },
+          {
+            "range": 60,
+            "brightness": [
+              [
+                0,
+                2.0
+              ],
+              [
+                0.3,
+                1.2
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "lifetime": 4.5,
+            "color": "LILAC",
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 1178,
+      "time": 19.6333
+    },
+    {
+      "marker": "SHOCKWAVE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "1",
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                4.0
+              ],
+              [
+                1.0,
+                80.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                3.0
+              ],
+              [
+                1.0,
+                0.4
+              ]
+            ],
+            "lifetime": 1.0,
+            "color": "CORE",
+            "kind": "ring"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 1.0,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  6.0
+                ],
+                [
+                  1.0,
+                  150.0
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  6.0
+                ],
+                [
+                  1.0,
+                  150.0
+                ]
+              ]
+            ],
+            "color": "LILAC",
+            "transparency": [
+              [
+                0,
+                0.5
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "intensity": 0.4,
+            "kind": "animate"
+          }
+        ]
+      },
+      "frame": 1182,
+      "time": 19.7
+    },
+    {
+      "marker": "DUST_WALL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "hiball",
+            "look": "smoke",
+            "count": 64,
+            "spawn": {
+              "shape": "ring",
+              "radius": 6
+            },
+            "dir": "out",
+            "tilt": 6,
+            "spread": 6,
+            "speed": [
+              48,
+              66
+            ],
+            "drag": 0.9,
+            "lifetime": [
+              2.6,
+              3.4
+            ],
+            "size": [
+              [
+                0.0,
+                3.0
+              ],
+              [
+                1.0,
+                13.0
+              ]
+            ],
+            "env": 0.3,
+            "color": [
+              [
+                0,
+                "DUST"
+              ],
+              [
+                1,
+                "ASH"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.25
+              ],
+              [
+                0.6,
+                0.55
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1185,
+      "time": 19.75
+    },
+    {
+      "marker": "DEBRIS",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "rock",
+            "look": "rock",
+            "count": 46,
+            "spawn": {
+              "shape": "disc",
+              "radius": [
+                1,
+                8
+              ]
+            },
+            "snap": "ground",
+            "dir": "out",
+            "tilt": 48,
+            "spread": 18,
+            "speed": [
+              40,
+              80
+            ],
+            "accel": [
+              0,
+              -196.2,
+              0
+            ],
+            "lifetime": 3.6,
+            "size": 1.3,
+            "env": 0.6,
+            "spin": [
+              200,
+              600
+            ],
+            "color": "STONE",
+            "ground": {
+              "bounce": [
+                0.2,
+                0.4
+              ],
+              "sink": 0.2
+            },
+            "kind": "part"
+          },
+          {
+            "shape": "ball",
+            "count": 180,
+            "spawn": {
+              "shape": "sphere",
+              "radius": 3,
+              "upper": true
+            },
+            "dir": "radial",
+            "spread": 40,
+            "speed": [
+              20,
+              60
+            ],
+            "drag": 0.8,
+            "accel": [
+              0,
+              -10,
+              0
+            ],
+            "lifetime": [
+              1.0,
+              2.4
+            ],
+            "size": [
+              [
+                0.0,
+                0.22
+              ],
+              [
+                1.0,
+                0.04
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.4,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1190,
+      "time": 19.8333
+    },
+    {
+      "marker": "SHOCKWAVE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "2",
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                4.0
+              ],
+              [
+                1.0,
+                100.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                2.4
+              ],
+              [
+                1.0,
+                0.3
+              ]
+            ],
+            "lifetime": 1.3,
+            "color": "VIOLET",
+            "kind": "ring"
+          }
+        ]
+      },
+      "frame": 1200,
+      "time": 20.0
+    },
+    {
+      "marker": "COLUMN",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "cylinder",
+            "lifetime": 4.5,
+            "offset": [
+              0,
+              110,
+              0
+            ],
+            "link": "world",
+            "size_xyz": [
+              [
+                [
+                  0,
+                  1.0
+                ],
+                [
+                  0.08,
+                  12.0
+                ],
+                [
+                  1,
+                  9.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  1.0
+                ],
+                [
+                  0.12,
+                  220.0
+                ],
+                [
+                  1,
+                  220.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  1.0
+                ],
+                [
+                  0.08,
+                  12.0
+                ],
+                [
+                  1,
+                  9.0
+                ]
+              ]
+            ],
+            "color": "CORE",
+            "transparency": [
+              [
+                0,
+                0.0
+              ],
+              [
+                0.6,
+                0.3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "intensity": 0.6,
+            "kind": "animate"
+          },
+          {
+            "shape": "cylinder",
+            "lifetime": 4.5,
+            "offset": [
+              0,
+              110,
+              0
+            ],
+            "link": "world",
+            "size_xyz": [
+              [
+                [
+                  0,
+                  2.0
+                ],
+                [
+                  0.1,
+                  20.0
+                ],
+                [
+                  1,
+                  26.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  2.0
+                ],
+                [
+                  0.12,
+                  220.0
+                ],
+                [
+                  1,
+                  220.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  2.0
+                ],
+                [
+                  0.1,
+                  20.0
+                ],
+                [
+                  1,
+                  26.0
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.4
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "intensity": 0.4,
+            "kind": "animate"
+          },
+          {
+            "shape": "block",
+            "rate": 36,
+            "duration": 3.5,
+            "spawn": {
+              "shape": "disc",
+              "radius": 4
+            },
+            "dir": "up",
+            "spread": 4,
+            "speed": [
+              80,
+              120
+            ],
+            "lifetime": [
+              1.0,
+              1.4
+            ],
+            "size": 0.5,
+            "aspect": [
+              0.3,
+              1,
+              0.3
+            ],
+            "rot": "velocity",
+            "stretch": 6,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                1,
+                "LILAC"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1200,
+      "time": 20.0
+    },
+    {
+      "marker": "SHOCKWAVE",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "3",
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                4.0
+              ],
+              [
+                1.0,
+                120.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                1.8
+              ],
+              [
+                1.0,
+                0.2
+              ]
+            ],
+            "lifetime": 1.6,
+            "color": "CRIMSON",
+            "kind": "ring"
+          }
+        ]
+      },
+      "frame": 1225,
+      "time": 20.4167
+    },
+    {
+      "marker": "MUSHROOM",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "hiball",
+            "look": "smoke",
+            "count": 26,
+            "offset": [
+              0,
+              82,
+              0
+            ],
+            "spawn": {
+              "shape": "sphere",
+              "radius": [
+                0,
+                8
+              ]
+            },
+            "dir": "radial",
+            "spread": 30,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 0.6,
+            "accel": [
+              0,
+              4,
+              0
+            ],
+            "lifetime": [
+              5.0,
+              6.0
+            ],
+            "size": [
+              [
+                0.0,
+                16.0
+              ],
+              [
+                1.0,
+                42.0
+              ]
+            ],
+            "env": 0.25,
+            "color": [
+              [
+                0,
+                "DUST"
+              ],
+              [
+                1,
+                "ASH"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.3
+              ],
+              [
+                0.7,
+                0.6
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 5.0,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  30.0
+                ],
+                [
+                  1.0,
+                  80.0
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  30.0
+                ],
+                [
+                  1.0,
+                  80.0
+                ]
+              ]
+            ],
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "offset": [
+              0,
+              72,
+              0
+            ],
+            "intensity": 0.4,
+            "kind": "animate"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                20.0
+              ],
+              [
+                1.0,
+                92.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                3.0
+              ],
+              [
+                1.0,
+                0.5
+              ]
+            ],
+            "lifetime": 3.0,
+            "color": "WHITE",
+            "offset": [
+              0,
+              58,
+              0
+            ],
+            "transparency": [
+              [
+                0,
+                0.4
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "ring"
+          },
+          {
+            "shape": "hiball",
+            "look": "smoke",
+            "rate": 10,
+            "duration": 3.0,
+            "spawn": {
+              "shape": "disc",
+              "radius": 6
+            },
+            "dir": "up",
+            "spread": 8,
+            "speed": [
+              20,
+              30
+            ],
+            "lifetime": [
+              2.8,
+              3.4
+            ],
+            "size": [
+              [
+                0.0,
+                6.0
+              ],
+              [
+                1.0,
+                15.0
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "DUST"
+              ],
+              [
+                1,
+                "ASH"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                0.4
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1240,
+      "time": 20.6667
+    },
+    {
+      "marker": "ASH_FALL",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "block",
+            "look": "smoke",
+            "rate": 60,
+            "duration": 6.0,
+            "offset": [
+              0,
+              40,
+              0
+            ],
+            "spawn": {
+              "shape": "box",
+              "box": [
+                110,
+                2,
+                110
+              ]
+            },
+            "dir": "down",
+            "spread": 10,
+            "speed": [
+              3,
+              6
+            ],
+            "accel": [
+              0,
+              -1,
+              0
+            ],
+            "lifetime": [
+              7.0,
+              9.0
+            ],
+            "size": 0.28,
+            "aspect": [
+              1,
+              0.1,
+              1
+            ],
+            "rot": "random",
+            "spin": [
+              60,
+              220
+            ],
+            "color": "ASH",
+            "transparency": [
+              [
+                0,
+                1
+              ],
+              [
+                0.1,
+                0.2
+              ],
+              [
+                0.85,
+                0.3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "shape": "ball",
+            "rate": 18,
+            "duration": 6.0,
+            "spawn": {
+              "shape": "disc",
+              "radius": [
+                2,
+                45
+              ]
+            },
+            "snap": "ground",
+            "dir": "up",
+            "spread": 20,
+            "speed": [
+              1,
+              3
+            ],
+            "lifetime": [
+              2.5,
+              4.0
+            ],
+            "size": [
+              [
+                0.0,
+                0.16
+              ],
+              [
+                1.0,
+                0.04
+              ]
+            ],
+            "color": [
+              [
+                0,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.2,
+                0.1
+              ],
+              [
+                0.6,
+                0.1
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "shape": "disc",
+            "lifetime": 7.0,
+            "size_xyz": [
+              [
+                [
+                  0.0,
+                  68.0
+                ],
+                [
+                  1.0,
+                  70.0
+                ]
+              ],
+              1.0,
+              [
+                [
+                  0.0,
+                  68.0
+                ],
+                [
+                  1.0,
+                  70.0
+                ]
+              ]
+            ],
+            "color": "ABYSS",
+            "transparency": [
+              [
+                0,
+                0.2
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "link": "world",
+            "look": "dark",
+            "kind": "animate"
+          },
+          {
+            "radius": [
+              [
+                0.0,
+                30.0
+              ],
+              [
+                1.0,
+                31.0
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                1.4
+              ],
+              [
+                1.0,
+                0.6
+              ]
+            ],
+            "lifetime": 6.0,
+            "color": "VIOLET",
+            "transparency": [
+              [
+                0,
+                0.3
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "kind": "ring"
+          }
+        ]
+      },
+      "frame": 1500,
+      "time": 25.0
+    },
+    {
+      "marker": "BLADE_REFORM",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "blade_mid",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "visible": true,
+            "delay": 0.33,
+            "fade": 0.15,
+            "kind": "blade"
+          },
+          {
+            "shape": "block",
+            "count": 70,
+            "spawn": {
+              "shape": "shell",
+              "radius": 3.5
+            },
+            "dir": "in",
+            "speed": [
+              5,
+              8
+            ],
+            "lifetime": [
+              0.4,
+              0.55
+            ],
+            "size": [
+              [
+                0.0,
+                0.08
+              ],
+              [
+                1.0,
+                0.16
+              ]
+            ],
+            "rot": "random",
+            "spin": [
+              90,
+              360
+            ],
+            "pull": 60,
+            "color": [
+              [
+                0,
+                "VIOLET"
+              ],
+              [
+                1,
+                "CORE"
+              ]
+            ],
+            "transparency": [
+              [
+                0,
+                1
+              ],
+              [
+                0.3,
+                0.1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "kind": "part"
+          },
+          {
+            "shape": "hiball",
+            "lifetime": 0.3,
+            "size": [
+              [
+                0.0,
+                0.3
+              ],
+              [
+                1.0,
+                2.6
+              ]
+            ],
+            "color": "LILAC",
+            "transparency": [
+              [
+                0,
+                0.1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "delay": 0.5,
+            "kind": "animate"
+          },
+          {
+            "range": 10,
+            "brightness": [
+              [
+                0.0,
+                1.2
+              ],
+              [
+                1.0,
+                0
+              ]
+            ],
+            "lifetime": 0.4,
+            "color": "LILAC",
+            "delay": 0.5,
+            "kind": "light"
+          }
+        ]
+      },
+      "frame": 1590,
+      "time": 26.5
+    },
+    {
+      "marker": "LAND",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "feet",
+      "layer": "secondary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "radius": [
+              [
+                0.0,
+                0.5
+              ],
+              [
+                1.0,
+                4.5
+              ]
+            ],
+            "width": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                0.05
+              ]
+            ],
+            "lifetime": 0.4,
+            "color": "LILAC",
+            "kind": "ring"
+          },
+          {
+            "shape": "ball",
+            "look": "smoke",
+            "count": 12,
+            "spawn": {
+              "shape": "ring",
+              "radius": 0.6
+            },
+            "dir": "out",
+            "tilt": 8,
+            "spread": 12,
+            "speed": [
+              4,
+              7
+            ],
+            "drag": 2.2,
+            "lifetime": [
+              0.6,
+              1.1
+            ],
+            "size": [
+              [
+                0.0,
+                0.4
+              ],
+              [
+                1.0,
+                1.6
+              ]
+            ],
+            "env": 0.25,
+            "transparency": [
+              [
+                0,
+                0.45
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "color": "DUST",
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1642,
+      "time": 27.3667
+    },
+    {
+      "marker": "TRAIL_START",
+      "offset": 0,
+      "fx": "trail",
+      "anchor": "blade",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "on": true,
+        "color": "LILAC",
+        "color2": "VIOLET",
+        "color3": "VOID",
+        "lifetime": 0.22
+      },
+      "frame": 1748,
+      "time": 29.1333
+    },
+    {
+      "marker": "FLICK",
+      "offset": 0,
+      "fx": "emit",
+      "anchor": "blade_base",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "layers": [
+          {
+            "shape": "block",
+            "count": 30,
+            "spawn": {
+              "shape": "segment",
+              "to": "blade_tip"
+            },
+            "dir": [
+              1,
+              0.3,
+              -0.6
+            ],
+            "spread": 35,
+            "speed": [
+              8,
+              16
+            ],
+            "drag": 1.0,
+            "accel": [
+              0,
+              -30,
+              0
+            ],
+            "lifetime": [
+              0.4,
+              0.8
+            ],
+            "size": [
+              [
+                0.0,
+                0.14
+              ],
+              [
+                1.0,
+                0.03
+              ]
+            ],
+            "aspect": [
+              0.35,
+              1,
+              0.35
+            ],
+            "rot": "velocity",
+            "stretch": 2.5,
+            "color": [
+              [
+                0,
+                "CORE"
+              ],
+              [
+                0.5,
+                "LILAC"
+              ],
+              [
+                1,
+                "VIOLET"
+              ]
+            ],
+            "transparency": [
+              [
+                0.0,
+                0
+              ],
+              [
+                1.0,
+                1
+              ]
+            ],
+            "kind": "part"
+          }
+        ]
+      },
+      "frame": 1762,
+      "time": 29.3667
+    },
+    {
+      "marker": "TRAIL_END",
+      "offset": 0,
+      "fx": "trail",
+      "anchor": "blade",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "on": false
+      },
+      "frame": 1770,
+      "time": 29.5
+    }
+  ],
+  "hits": [
+    {
+      "marker": "NUKE",
+      "offset": 0,
+      "fx": "blast",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": null,
+      "params": {
+        "radius": 60.0,
+        "damage": 45,
+        "knockback": 90.0,
+        "lift": 45.0
+      },
+      "frame": 1178,
+      "time": 19.6333
+    },
+    {
+      "marker": "SHOCKWAVE",
+      "offset": 0,
+      "fx": "push",
+      "anchor": "feet",
+      "layer": "primary",
+      "when": "3",
+      "params": {
+        "radius": 120.0,
+        "damage": 0,
+        "knockback": 45.0,
+        "lift": 15.0
+      },
+      "frame": 1225,
+      "time": 20.4167
+    }
+  ]
+}
