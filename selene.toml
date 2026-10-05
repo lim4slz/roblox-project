@@ -1,0 +1,10 @@
+std = "roblox"
+exclude = ["vendor/**", "build/**"]
+
+[lints]
+# Every global access must be a known Roblox/Luau global; typos become errors.
+global_usage = "deny"
+# Shadowing is a frequent source of subtle bugs in event handlers.
+shadowing = "warn"
+# Deprecated Roblox APIs (wait, spawn, delay, ...) are not allowed.
+deprecated = "deny"
