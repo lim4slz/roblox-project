@@ -14,7 +14,7 @@ export type RarityDef = {
 
 local Rarity = {}
 
-local DEFINITIONS: { [RarityId]: RarityDef } = {
+local DEFINITIONS: { [string]: RarityDef } = {
 	Junk = { id = "Junk", name = "Junk", order = 0, color = Color3.fromRGB(150, 140, 130) },
 	Common = { id = "Common", name = "Common", order = 1, color = Color3.fromRGB(196, 204, 214) },
 	Uncommon = { id = "Uncommon", name = "Uncommon", order = 2, color = Color3.fromRGB(102, 214, 122) },
@@ -26,7 +26,7 @@ local DEFINITIONS: { [RarityId]: RarityDef } = {
 Rarity.All = table.freeze(DEFINITIONS)
 
 function Rarity.get(id: string): RarityDef?
-	return (DEFINITIONS :: any)[id]
+	return DEFINITIONS[id]
 end
 
 function Rarity.order(id: string): number

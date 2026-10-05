@@ -15,7 +15,7 @@ local GameConfig = {
 	Version = "1.0.0",
 
 	-- Release date used for the "Founder" title (players who join in the first 30 days).
-	LaunchTimestamp = 1793404800, -- 2026-11-01 00:00:00 UTC
+	LaunchTimestamp = 1793491200, -- 2026-11-01 00:00:00 UTC
 	FounderWindowDays = 30,
 
 	Data = {
