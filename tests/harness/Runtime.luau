@@ -488,12 +488,6 @@ function Runtime:createServer(options)
 		world:log("print", server.serverCtx, string.format("Kicked %s: %s", playerState.name, message))
 		server:disconnect(playerState.proxy, "Kicked")
 	end
-	server.spawnCharacter = function(playerState)
-		server:spawnCharacter(playerState)
-	end
-	server.buildRig = function(name, ctx)
-		return server:buildRig(name, ctx)
-	end
 
 	-- DataModel + services from the place
 	local dataModel, dataModelState = Instances.create(server, "DataModel", nil, { internal = true })

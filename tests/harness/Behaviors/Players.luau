@@ -80,7 +80,7 @@ Instances.define("Players", {
 		CreateHumanoidModelFromDescription = function(self, description, rigType)
 			local st = states(self)
 			requireServer(st, "CreateHumanoidModelFromDescription")
-			return st.server.buildRig("Character", ctxOf(st), description)
+			return st.server:buildRig("Character", ctxOf(st), description)
 		end,
 		GetNameFromUserIdAsync = function(self, userId)
 			local st = states(self)
@@ -162,7 +162,7 @@ Instances.define("Player", {
 		LoadCharacter = function(self)
 			local st = states(self)
 			requireServer(st, "LoadCharacter")
-			st.server.spawnCharacter(st)
+			st.server:spawnCharacter(st)
 		end,
 		GetJoinData = function(self)
 			return table.clone(states(self).extra.joinData or {})
