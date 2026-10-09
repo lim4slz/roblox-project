@@ -12,6 +12,8 @@ local Enum = roblox.Enum
 
 local Datatypes = {}
 
+local CFrameLib
+
 local fields = setmetatable({}, { __mode = "k" })
 
 local function readonlyProxy(typeName, data, methods)
@@ -205,13 +207,47 @@ local function paramsFactory(typeName)
 	}
 end
 
+-- Lune's CFrame.lookAt (and CFrame.new(position, lookAt)) faces away from the
+-- target along Z: towards -Z it returns a LookVector of +Z. Roblox faces the
+-- target, so the sandbox gets a CFrame library with those two rebuilt on top
+-- of CFrame.fromMatrix, which Lune gets right.
+local function lookAt(at, target, up)
+	local look = target - at
+	if look.Magnitude < 1e-9 then
+		return roblox.CFrame.new(at)
+	end
+	look = look.Unit
+	local upVector = up or roblox.Vector3.yAxis
+	local right = look:Cross(upVector)
+	if right.Magnitude < 1e-6 then
+		-- Looking straight along `up`: any right vector perpendicular to it works.
+		right = look:Cross(roblox.Vector3.zAxis)
+		if right.Magnitude < 1e-6 then
+			right = look:Cross(roblox.Vector3.xAxis)
+		end
+	end
+	right = right.Unit
+	return roblox.CFrame.fromMatrix(at, right, right:Cross(look), -look)
+end
+
+CFrameLib = setmetatable({
+	lookAt = lookAt,
+	new = function(...)
+		local first, second = ...
+		if select("#", ...) == 2 and typeof(first) == "Vector3" and typeof(second) == "Vector3" then
+			return lookAt(first, second)
+		end
+		return roblox.CFrame.new(...)
+	end,
+}, { __index = roblox.CFrame })
+
 function Datatypes.globals(scheduler)
 	return {
 		Vector3 = roblox.Vector3,
 		Vector2 = roblox.Vector2,
 		Vector3int16 = roblox.Vector3int16,
 		Vector2int16 = roblox.Vector2int16,
-		CFrame = roblox.CFrame,
+		CFrame = CFrameLib,
 		Color3 = roblox.Color3,
 		UDim = roblox.UDim,
 		UDim2 = roblox.UDim2,
@@ -240,5 +276,6 @@ end
 
 Datatypes.Random = Random
 Datatypes.TweenInfo = TweenInfo
+Datatypes.CFrame = CFrameLib
 
 return Datatypes

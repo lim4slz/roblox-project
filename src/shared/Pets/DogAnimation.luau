@@ -9,7 +9,7 @@
 
 	Pure math, no Instances, so it is deterministic and testable:
 
-	  local anim = DogAnimation.new(seed)
+	  local anim = DogAnimation.new(seed, every) -- every = { min, max } seconds between WOOFs (math.huge = never)
 	  local barks = anim:step(dt, speed) -- WOOFs that started during this step
 	  local pose = anim:pose()           -- { [bone]: CFrame } for PetRig:solve
 
@@ -41,9 +41,9 @@ local WALK_RATE, WALK_RATE_PER_STUD = 1.5, 0.055
 local RUN_RATE, RUN_RATE_PER_STUD = 2.1, 0.05
 
 -- Random WOOFs: the first one comes soon after spawning; after each burst of
--- 1-3 barks ends, the next one comes WOOF_MIN..WOOF_MAX seconds later.
+-- 1-3 barks ends, the next one comes `every` (default 3.5..8) seconds later.
 local FIRST_WOOF_MIN, FIRST_WOOF_MAX = 1.5, 3
-local WOOF_MIN, WOOF_MAX = 3.5, 8
+local EVERY = { 3.5, 8 }
 local BARK_GAP = 0.3 -- seconds between the barks of a "woof woof"
 local BARK_LENGTH = 0.6 -- seconds one bark animates
 
@@ -52,6 +52,7 @@ local BLINK_LENGTH = 0.13
 
 type Impl = {
 	_rng: Random,
+	_every: { number },
 	_time: number,
 	_phase: number, -- gait cycle, 0..1
 	_wag: number, -- tail wag cycle, 0..1
@@ -97,11 +98,14 @@ end
 local DogAnimation = {}
 
 DogAnimation.BarkLength = BARK_LENGTH
+DogAnimation.Every = table.freeze(EVERY)
 
-function DogAnimation.new(seed: number?): DogAnimation
+function DogAnimation.new(seed: number?, every: { number }?): DogAnimation
 	local rng = if seed then Random.new(seed) else Random.new()
+	local interval = every or EVERY
 	local self: Impl = {
 		_rng = rng,
+		_every = interval,
 		_time = 0,
 		_phase = 0,
 		_wag = rng:NextNumber(),
@@ -109,7 +113,9 @@ function DogAnimation.new(seed: number?): DogAnimation
 		_run = 0,
 		_barks = {},
 		_queued = {},
-		_nextWoof = rng:NextNumber(FIRST_WOOF_MIN, FIRST_WOOF_MAX),
+		_nextWoof = if interval[1] < math.huge
+			then rng:NextNumber(math.min(FIRST_WOOF_MIN, interval[1]), math.min(FIRST_WOOF_MAX, interval[2]))
+			else math.huge,
 		_nextBlink = rng:NextNumber(BLINK_MIN, BLINK_MAX),
 		_blinkUntil = -1,
 		_pose = {},
@@ -137,7 +143,8 @@ function AnimationClass.woof(self: Impl, count: number?)
 		table.insert(self._queued, start + index * BARK_GAP + jitter)
 	end
 	local finished = self._queued[#self._queued] + BARK_LENGTH
-	self._nextWoof = finished + rng:NextNumber(WOOF_MIN, WOOF_MAX)
+	local every = self._every
+	self._nextWoof = if every[1] < math.huge then finished + rng:NextNumber(every[1], every[2]) else math.huge
 end
 
 -- Advances time; returns how many barks started (play the sound/bubble for each).

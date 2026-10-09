@@ -17,3 +17,6 @@ roblox.yml
 .idea/
 .DS_Store
 Thumbs.db
+
+# The client folder is built by scripts/build_pet_packs.luau and committed with its .rbxm files
+!/Work꞉ pet animation/**

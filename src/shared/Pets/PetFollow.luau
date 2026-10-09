@@ -6,7 +6,7 @@
 	then turns to look at its owner. Pure math (positions in, positions out) so
 	it can be unit tested; the caller supplies the ground height.
 
-	  local follow = PetFollow.new(spawnPosition, yaw)
+	  local follow = PetFollow.new(spawnPosition, yaw, offset) -- offset is optional
 	  PetFollow.step(follow, ownerRootCFrame, groundY, dt)
 	  local cframe = PetFollow.cframe(follow) -- ground point, facing the pet's heading
 ]]
@@ -16,10 +16,11 @@ export type State = {
 	velocity: Vector3, -- horizontal, studs/s
 	speed: number,
 	yaw: number, -- heading in radians (0 faces -Z)
+	offset: Vector3, -- spot next to the owner: X studs to their right, Z studs behind them
 }
 
-local OFFSET_RIGHT = 2.6 -- studs to the owner's right
-local OFFSET_BACK = 3.4 -- studs behind the owner
+-- A little behind the owner, on their right.
+local DEFAULT_OFFSET = Vector3.new(2.6, 0, 3.4)
 local ARRIVE_RADIUS = 0.8 -- close enough to the spot: stop
 -- Desired speed per stud of distance to the spot. Keeping up with a walking
 -- owner (16 studs/s) takes ~4.5 studs of lag; falling further behind means running.
@@ -48,23 +49,26 @@ local function turnTowards(current: number, target: number, maxStep: number): nu
 	return current + math.clamp(delta, -maxStep, maxStep)
 end
 
+PetFollow.DefaultOffset = DEFAULT_OFFSET
+
 -- Where the pet wants to be for an owner standing at `owner`.
-function PetFollow.goal(owner: CFrame): Vector3
+function PetFollow.goal(owner: CFrame, offset: Vector3?): Vector3
+	local spot = offset or DEFAULT_OFFSET
 	local forward = flat(owner.LookVector)
 	forward = if forward.Magnitude > 1e-3 then forward.Unit else Vector3.new(0, 0, -1)
 	local right = Vector3.new(-forward.Z, 0, forward.X)
-	return owner.Position + right * OFFSET_RIGHT - forward * OFFSET_BACK
+	return owner.Position + right * spot.X - forward * spot.Z
 end
 
-function PetFollow.new(position: Vector3, yaw: number?): State
-	return { position = position, velocity = Vector3.zero, speed = 0, yaw = yaw or 0 }
+function PetFollow.new(position: Vector3, yaw: number?, offset: Vector3?): State
+	return { position = position, velocity = Vector3.zero, speed = 0, yaw = yaw or 0, offset = offset or DEFAULT_OFFSET }
 end
 
 function PetFollow.step(state: State, owner: CFrame, groundY: number, dt: number)
 	if dt <= 0 then
 		return
 	end
-	local goal = PetFollow.goal(owner)
+	local goal = PetFollow.goal(owner, state.offset)
 	local toGoal = flat(goal - state.position)
 	local distance = toGoal.Magnitude
 	if distance > SNAP_DISTANCE then

@@ -15,6 +15,7 @@ return function(t)
 	local DogAnimation = Shared.require("Pets.DogAnimation")
 	local PetFollow = Shared.require("Pets.PetFollow")
 	local PetRig = Shared.require("Pets.PetRig")
+	local DogPet = Shared.require("Pets.DogPet")
 
 	local parts = DogModel.Definition.parts
 	local function partIndex(name)
@@ -282,8 +283,12 @@ return function(t)
 	describe("Dog pet on the client", function()
 		local function dogsSeenBy(client)
 			return client:run(function()
-				local folder = workspace:FindFirstChild("Pets")
-				return if folder then #folder:GetChildren() else 0
+				local folder = workspace:FindFirstChild("AnimatedPets")
+				local count = 0
+				for _, pet in if folder then folder:GetChildren() else {} do
+					count += if pet.Name == "Dog" then 1 else 0
+				end
+				return count
 			end)
 		end
 
@@ -295,7 +300,7 @@ return function(t)
 			world:advance(1)
 
 			local dog = alice:run(function()
-				local model = workspace.Pets:FindFirstChild("Dog")
+				local model = workspace.AnimatedPets:FindFirstChild("Dog")
 				local anchored, colliding = 0, 0
 				for _, part in model:GetChildren() do
 					if part:IsA("BasePart") then
@@ -320,7 +325,7 @@ return function(t)
 				world:step(1 / 30)
 			end
 			local body = alice:run(function()
-				return workspace.Pets.Dog.Body.Position
+				return workspace.AnimatedPets.Dog.Body.Position
 			end)
 			expect((body - alice:position()).Magnitude).toBeLessThan(12)
 
@@ -329,7 +334,7 @@ return function(t)
 			for _ = 1, 8 * 30 do
 				world:step(1 / 30)
 				alice:run(function()
-					for _, gui in workspace.Pets.Dog:GetChildren() do
+					for _, gui in workspace.AnimatedPets.Dog:GetChildren() do
 						if gui:IsA("BillboardGui") then
 							bubbles = math.max(bubbles, 1)
 							texts[gui.Text.Text] = true
@@ -340,7 +345,7 @@ return function(t)
 			expect(bubbles).toBe(1)
 			local barks = 0
 			for _, sound in world.soundsPlayed do
-				if sound.ctx == alice.ctx.id and string.match(sound.soundId, "^rbxassetid://%d+$") then
+				if sound.ctx == alice.ctx.id and sound.soundId == DogPet.Defaults.sound then
 					barks += 1
 					expect(sound.speed).toBeGreaterThanOrEqual(1.05)
 				end
@@ -356,12 +361,12 @@ return function(t)
 			local world = t.newWorld()
 			local server = world:createServer()
 			local alice = server:addPlayer({ userId = 121, name = "Alice" })
-			local DogPet = alice:require("StarterPlayer.StarterPlayerScripts.Client.Pets.DogPet")
+			local ClientDogPet = alice:require("ReplicatedStorage.Shared.Pets.DogPet")
 			alice:run(function()
 				local folder = Instance.new("Folder")
 				folder.Parent = workspace
 				local character = Instance.new("Model")
-				local dog = DogPet.new(character, folder, RaycastParams.new(), 1)
+				local dog = ClientDogPet.new(character, folder, { raycastParams = RaycastParams.new(), seed = 1 })
 				dog:update(1 / 30)
 				expect(dog.model.Parent).toBeNil()
 
@@ -375,7 +380,7 @@ return function(t)
 				local body = dog.model:FindFirstChild("Body") :: BasePart
 				expect((body.Position - Vector3.new(50, 3, 50)).Magnitude).toBeLessThan(6)
 
-				dog:woof(1)
+				dog:react(1)
 				dog:update(1 / 30)
 				expect(dog.model:FindFirstChild("WoofBubble")).never.toBeNil()
 				dog:destroy()
