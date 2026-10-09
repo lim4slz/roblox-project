@@ -77,7 +77,7 @@ What each one does:
       speed and bubble grow with it.
 
   Spot
-      Where it walks next to its owner, in studs. X is to the right (negative
+      Where it goes next to its owner, in studs. X is to the right (negative
       goes to the left), Z is behind (negative goes in front).
 
   Sound
@@ -262,7 +262,7 @@ GOOD TO KNOW
 - The pets live in a folder called AnimatedPets in Workspace, made on each
   player's device. They aren't on the server, so server scripts can't see them
   (on purpose).
-- The {{LOWER}} finds the ground with a raycast, so it walks up ramps and
+- The {{LOWER}} finds the ground with a raycast, so it goes up ramps and
   stairs (and on top of terrain water). Where there's no floor under it, it
   stays at its owner's feet height.
 - When its owner teleports or respawns far away, the {{LOWER}} jumps straight

@@ -85,6 +85,11 @@ return function(t)
 					expect(string.find(readme, "\n  " .. key .. "\n", 1, true)).never.toBeNil()
 				end
 				expect(string.find(readme, "[ãõçáéíóúâêôà]")).toBeNil()
+				-- The scripts point to the README by its real name.
+				for _, source in { PetPacks.configSource(pack), PetPacks.clientSource(pack) } do
+					expect(string.find(source, "README.txt", 1, true)).never.toBeNil()
+					expect(string.find(source, "README.md", 1, true)).toBeNil()
+				end
 			end
 		end)
 

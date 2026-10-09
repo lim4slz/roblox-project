@@ -1,0 +1,22 @@
+WHAT THE CRAB DOES
+------------------
+
+A red blocky crab with two big claws and its eyes on stalks. None of it is a
+canned animation: it all reacts to how fast its owner is moving.
+
+- Standing: it breathes, and each eye stalk looks around on its own, so now
+  and then it looks two ways at once. It blinks (sometimes with one eye only),
+  opens and closes a pincer and taps a foot.
+- Walking: like a real crab, it turns its side to where it's going and
+  scuttles sideways on quick little steps, the shell rocking, claws up and
+  both eyes looking ahead. Each time it sets off it picks which side goes
+  first.
+- Hurrying: when it falls behind, the steps get faster and the shell sits
+  lower.
+- SNAP!: every few seconds it throws both claws up in the air and snaps them
+  three times, with a little hop on each snap, its eyes popping up and its
+  mouth open. A bubble pops up with the clicks of a crab claw, in time with
+  the snaps.
+
+It scuttles along on its owner's left, a little behind, and turns to face
+ahead again when its owner stops.

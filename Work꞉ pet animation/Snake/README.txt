@@ -99,7 +99,7 @@ default values:
 
     --[[
         Pet settings. Change anything here and press Play to see it.
-        The full guide is in README.md, next to the files you dragged in.
+        The full guide is in README.txt, next to the files you dragged in.
     ]]
 
     local Config = {}
@@ -165,7 +165,7 @@ What each one does:
       speed and bubble grow with it.
 
   Spot
-      Where it walks next to its owner, in studs. X is to the right (negative
+      Where it goes next to its owner, in studs. X is to the right (negative
       goes to the left), Z is behind (negative goes in front).
 
   Sound
@@ -290,7 +290,7 @@ yourself, select the accessory and add an Attribute called Bone (type string)
 with one of these:
 
   Head, Body1, Body2, Body3, Body4, Body5, Body6, Body7, Body8, Body9, Body10,
-  Tongue, Mouth, BrowL, BrowR
+  Tongue, BrowL, BrowR
 
 Accessories keep their own size and position, and like the rest of the
 snake they're anchored and don't collide.
@@ -355,7 +355,7 @@ GOOD TO KNOW
 - The pets live in a folder called AnimatedPets in Workspace, made on each
   player's device. They aren't on the server, so server scripts can't see them
   (on purpose).
-- The snake finds the ground with a raycast, so it walks up ramps and
+- The snake finds the ground with a raycast, so it goes up ramps and
   stairs (and on top of terrain water). Where there's no floor under it, it
   stays at its owner's feet height.
 - When its owner teleports or respawns far away, the snake jumps straight

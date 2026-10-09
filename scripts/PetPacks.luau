@@ -6,7 +6,6 @@
 	    Dog/          README.txt + ReplicatedStorage/DogPet.rbxm
 	                  + StarterPlayer/StarterPlayerScripts/DogPetClient.rbxm
 	    Snake/ ...    (one folder per pet)
-	    Dragon/       placeholder until its model arrives
 	    All in One/   every pet in one install
 
 	The folders inside each pack mirror the Roblox Explorer, so every file is
@@ -66,6 +65,43 @@ PetPacks.Pets = {
 		soundCredit = 'The default hiss is "Snake Hiss 1 (SFX)" by Pro Sound Effects, licensed by Roblox for every '
 			.. "experience. It has 2.8 seconds of silence at the start, that's why SoundStart is 2.8 by default.",
 	},
+	Bunny = {
+		modules = { "BunnyAnimation", "BunnyModel", "BunnyPet" },
+		model = "BunnyModel",
+		lower = "bunny",
+		react = "do a binky",
+		reacts = "does a binky",
+		soundWord = "squeak",
+		bodyPart = "Body",
+		textExample = '"Boing!", "Hippity hop!"',
+		soundCredit = 'The default squeak is "Squeeze Toy Squeaky Rubber With Noisemaker Hits 9" by Pro Sound '
+			.. "Effects, licensed by Roblox for every experience.",
+	},
+	Crab = {
+		modules = { "CrabAnimation", "CrabModel", "CrabPet" },
+		model = "CrabModel",
+		lower = "crab",
+		react = "snap",
+		reacts = "snaps",
+		soundWord = "snap",
+		bodyPart = "Shell",
+		textExample = '"PINCH!", "Clickety clack!"',
+		soundCredit = 'The default snap is "Crab Claw Smaller Snaps Plasticky 3" by Pro Sound Effects, licensed by '
+			.. "Roblox for every experience. Its three clicks match the three snaps of the animation, so with a sound"
+			.. " of your own the clicks may not line up with the claws.",
+	},
+	Dragon = {
+		modules = { "DragonAnimation", "DragonModel", "DragonPet" },
+		model = "DragonModel",
+		lower = "dragon",
+		react = "breathe fire",
+		reacts = "breathes fire",
+		soundWord = "whoosh",
+		bodyPart = "Body",
+		textExample = '"BURN!", "Hot hot hot!"',
+		soundCredit = 'The default whoosh is "Fire Whoosh 4" by Pro Sound Effects, licensed by Roblox for every '
+			.. "experience. It builds up slowly, that's why SoundStart is 1.3 by default.",
+	},
 }
 
 PetPacks.Packs = {
@@ -86,16 +122,42 @@ PetPacks.Packs = {
 			.. 'stairs segment by segment, flicks its forked tongue and rears up to "HISS!" with a pop-up bubble.',
 	},
 	{
+		dir = "Bunny",
+		folder = "BunnyPet",
+		pets = { "Bunny" },
+		title = "Animated Bunny Pet",
+		intro = "A cartoon bunny that hops after each player: it twitches its nose, flicks its ears, makes longer "
+			.. "hops to catch up and jumps for joy (a binky) with a pop-up bubble and a squeak.",
+	},
+	{
+		dir = "Crab",
+		folder = "CrabPet",
+		pets = { "Crab" },
+		title = "Animated Crab Pet",
+		intro = "A cartoon crab that scuttles sideways after each player: its eyes look around on their stalks, it"
+			.. ' blinks, pinches the air and throws its claws up to "SNAP!" with a pop-up bubble and claw clicks.',
+	},
+	{
+		dir = "Dragon",
+		folder = "DragonPet",
+		pets = { "Dragon" },
+		title = "Animated Dragon Pet",
+		intro = "A cartoon dragon that flies after each player: it flaps its wings, lands and folds them when its"
+			.. " owner stands still, takes off again when they move and breathes a stream of fire with a pop-up"
+			.. " bubble and a whoosh.",
+	},
+	{
 		dir = "All in One",
 		folder = "AllPets",
-		pets = { "Dog", "Snake" },
+		pets = { "Dog", "Snake", "Bunny", "Crab", "Dragon" },
 		title = "Animated Pets: All in One",
 		allInOne = true,
 	},
 }
 
--- Folders that only hold a README for now.
-PetPacks.Placeholders = { "Dragon" }
+-- Folders that only hold a README for now (packs/readme/<Name>.txt), for a
+-- pet whose model has not arrived yet.
+PetPacks.Placeholders = {} :: { string }
 
 local function read(path: string): string
 	return fs.readFile(path)
@@ -324,10 +386,17 @@ local function codeBlock(source: string): string
 	return table.concat(lines, "\n")
 end
 
+-- Bones that only move parts hidden at rest (eyelids, mouths, flames) are
+-- left out: an accessory on them would hide or fly off with them.
 local function bonesList(name: string): string
 	local names = {}
 	for _, bone in definitionOf(name).bones do
-		table.insert(names, bone.name)
+		local hidden = string.match(bone.name, "^Lids?[LR]?$")
+			or bone.name == "Mouth"
+			or string.match(bone.name, "^Fire%d+$")
+		if not hidden then
+			table.insert(names, bone.name)
+		end
 	end
 	return table.concat(names, ", ")
 end
@@ -459,7 +528,20 @@ function PetPacks.allInOneReadme(pack): string
 		),
 		FOLDER = pack.folder,
 		CLIENT = pack.folder .. "Client",
-		PET_LIST = spoken(pack.pets),
+		INTRO = wrap(
+			"Every animated pet in one install: "
+				.. spoken(pack.pets)
+				.. ". Out of the box every player gets all of them, and the Config lets you choose who gets which.",
+			""
+		),
+		OUTPUT_HINT = wrap(
+			"Open View > Output. Messages starting with [Pets] tell you what's wrong, like a misspelled name in"
+				.. " Config.Pets. The names are "
+				.. spoken(pack.pets)
+				.. ", with capital letters.",
+			"  - ",
+			"    "
+		),
 		FILES_TREE = filesTree(pack),
 		EXPLORER_TREE = explorerTree(pack),
 		PET_DOCS = table.concat(docs, "\n\n\n"),

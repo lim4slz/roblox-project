@@ -1,8 +1,9 @@
 ANIMATED PETS: ALL IN ONE
 =========================
 
-Every animated pet in one install: Dog and Snake. Out of the box every player
-gets all of them, and the Config lets you choose who gets which.
+Every animated pet in one install: Dog, Snake, Bunny, Crab and Dragon. Out of
+the box every player gets all of them, and the Config lets you choose who gets
+which.
 
 It works in any Roblox game, R15 or R6, with or without StreamingEnabled. You
 drag two files into Studio and that's it: no server script, no RemoteEvents,
@@ -53,10 +54,22 @@ looks like this:
       Models               (Folder)         what each pet looks like
         Dog                (Model)
         Snake              (Model)
+        Bunny              (Model)
+        Crab               (Model)
+        Dragon             (Model)
       Modules              (Folder)         the code, no need to touch it
+        BunnyAnimation     (ModuleScript)
+        BunnyModel         (ModuleScript)
+        BunnyPet           (ModuleScript)
+        CrabAnimation      (ModuleScript)
+        CrabModel          (ModuleScript)
+        CrabPet            (ModuleScript)
         DogAnimation       (ModuleScript)
         DogModel           (ModuleScript)
         DogPet             (ModuleScript)
+        DragonAnimation    (ModuleScript)
+        DragonModel        (ModuleScript)
+        DragonPet          (ModuleScript)
         PetFollow          (ModuleScript)
         PetKit             (ModuleScript)
         PetRig             (ModuleScript)
@@ -115,8 +128,79 @@ tongue. None of it is a canned animation:
 Its head stays a little behind its owner, on the left, and the body trails
 behind.
 
-Each pet walks on its own spot next to its owner, so they don't bump into each
-other. You can move them with Spot.
+
+WHAT THE BUNNY DOES
+-------------------
+
+A white blocky bunny with long pink-lined ears and a fluffy tail. None of it
+is a canned animation: it all reacts to how fast its owner is moving.
+
+- Sitting: it breathes, twitches its nose in quick little bursts, flicks or
+  turns one ear at a time to listen, looks around and blinks.
+- Hopping: a crouch, a push with the long hind feet, an arc through the air
+  with the ears streaming back, front paws first on landing, then the hind
+  feet, and the ears flop forward.
+- Running: when it falls behind, the hops get longer, higher and faster, with
+  the body stretched out.
+- Binky!: every few seconds it does a binky, the jump real bunnies do when
+  they're happy. It crouches, springs straight up with a twist, kicks its
+  hind feet out, flaps its ears, shuts its eyes, opens its mouth and lands
+  with a little squash, with a pop-up bubble and a squeak.
+
+It hops along on its owner's right, a little behind. When its owner stops, it
+hops to its spot and sits down.
+
+
+WHAT THE CRAB DOES
+------------------
+
+A red blocky crab with two big claws and its eyes on stalks. None of it is a
+canned animation: it all reacts to how fast its owner is moving.
+
+- Standing: it breathes, and each eye stalk looks around on its own, so now
+  and then it looks two ways at once. It blinks (sometimes with one eye only),
+  opens and closes a pincer and taps a foot.
+- Walking: like a real crab, it turns its side to where it's going and
+  scuttles sideways on quick little steps, the shell rocking, claws up and
+  both eyes looking ahead. Each time it sets off it picks which side goes
+  first.
+- Hurrying: when it falls behind, the steps get faster and the shell sits
+  lower.
+- SNAP!: every few seconds it throws both claws up in the air and snaps them
+  three times, with a little hop on each snap, its eyes popping up and its
+  mouth open. A bubble pops up with the clicks of a crab claw, in time with
+  the snaps.
+
+It scuttles along on its owner's left, a little behind, and turns to face
+ahead again when its owner stops.
+
+
+WHAT THE DRAGON DOES
+--------------------
+
+A green blocky dragon with yellow wings, two horns and little fangs. None of
+it is a canned animation: it all reacts to how fast its owner is moving.
+
+- Hovering: it flies about 2 studs off the ground next to its owner, beating
+  its wings (a quick downstroke that lifts it, a slower upstroke), its legs
+  dangling and its tail swaying. It blinks and looks around.
+- Flying: when its owner walks it leans into the flight and flaps a little
+  harder. When it falls behind it stretches out and flaps hard, legs tucked
+  back and tail straight.
+- Landing: when its owner stands still for 6 seconds it lands next to them,
+  folds its wings back and sits, looking around. As soon as its owner moves
+  it takes off again.
+- Fire!: every few seconds it rears its head back to take a breath, then
+  throws it forward with the jaw wide open and breathes a stream of flames,
+  wings beating hard, with a pop-up bubble and the whoosh of the fire. The
+  flames are four glowing Neon blocks that hide inside its head the rest of
+  the time.
+
+It flies behind its owner, on the right, a bit higher than the other pets, so
+it doesn't bump into them.
+
+Each pet has its own spot next to its owner, so they don't bump into each
+other (the dragon flies over the others). You can move them with Spot.
 
 
 SETTINGS
@@ -128,13 +212,13 @@ default values:
 
     --[[
         Pet settings. Change anything here and press Play to see it.
-        The full guide is in README.md, next to the files you dragged in.
+        The full guide is in README.txt, next to the files you dragged in.
     ]]
 
     local Config = {}
 
-    -- Pets every player gets. Pet names: "Dog", "Snake"
-    Config.Pets = { "Dog", "Snake" }
+    -- Pets every player gets. Pet names: "Dog", "Snake", "Bunny", "Crab", "Dragon"
+    Config.Pets = { "Dog", "Snake", "Bunny", "Crab", "Dragon" }
 
     -- Who gets pets:
     --   "Everyone"   every player gets Config.Pets (default)
@@ -188,6 +272,66 @@ default values:
         Every = { 5, 10 },
     }
 
+    -- BUNNY ----------------------------------------------------------------------
+    Config.Bunny = {
+        -- 1 = original size, 2 = twice as big, 0.5 = half.
+        Scale = 1,
+        -- Where it hops next to its owner, in studs: X to the right (negative =
+        -- left), Z behind (negative = in front).
+        Spot = Vector3.new(5.2, 0, 0.6),
+        -- The squeak of a binky. Any sound id your game is allowed to play.
+        -- "" = no sound.
+        Sound = "rbxassetid://9125994553",
+        SoundStart = 0, -- second of the sound file where the squeak starts
+        Volume = 0.5,
+        -- Words that pop up over its head when it does a binky. {} = no bubble.
+        Texts = { "Boing!", "Hop!", "Wheee!", "Yay!" },
+        -- Seconds between the binkies it does on its own: { min, max }.
+        -- false = it only does them when your scripts call PetSpawner.react.
+        Every = { 4.5, 9 },
+    }
+
+    -- CRAB -----------------------------------------------------------------------
+    Config.Crab = {
+        -- 1 = original size, 2 = twice as big, 0.5 = half.
+        Scale = 1,
+        -- Where it scuttles next to its owner, in studs: X to the right
+        -- (negative = left), Z behind (negative = in front).
+        Spot = Vector3.new(-5.8, 0, 0.4),
+        -- The claw clicks of a SNAP. Any sound id your game is allowed to play.
+        -- "" = no sound.
+        Sound = "rbxassetid://9113957844",
+        SoundStart = 0, -- second of the sound file where the first click is
+        Volume = 0.8,
+        -- Words that pop up over its head when it snaps. {} = no bubble.
+        Texts = { "SNAP!", "Snip snap!", "CLACK!", "Snap snap!" },
+        -- Seconds between the SNAPs it does on its own: { min, max }.
+        -- false = it only snaps when your scripts call PetSpawner.react.
+        Every = { 4, 8 },
+    }
+
+    -- DRAGON ---------------------------------------------------------------------
+    Config.Dragon = {
+        -- 1 = original size, 2 = twice as big, 0.5 = half.
+        Scale = 1,
+        -- Where it flies next to its owner, in studs: X to the right (negative =
+        -- left), Z behind (negative = in front). It flies about 2 studs up.
+        Spot = Vector3.new(4.6, 0, 6.6),
+        -- The whoosh of its fire. Any sound id your game is allowed to play.
+        -- "" = no sound.
+        Sound = "rbxassetid://9114439216",
+        -- Second of the sound file where the whoosh starts. The default sound
+        -- builds up slowly, so it starts 1.3 seconds in. Set it to 0 when you use
+        -- your own sound.
+        SoundStart = 1.3,
+        Volume = 0.6,
+        -- Words that pop up over its head when it breathes fire. {} = no bubble.
+        Texts = { "ROAR!", "RAWR!", "FWOOSH!", "Rawr!" },
+        -- Seconds between the fire breaths it does on its own: { min, max }.
+        -- false = it only breathes fire when your scripts call PetSpawner.react.
+        Every = { 6, 12 },
+    }
+
     return Config
 
 What each one does:
@@ -216,7 +360,7 @@ What each one does:
       bubble grow with it.
 
   Spot
-      Where it walks next to its owner, in studs. X is to the right (negative
+      Where it goes next to its owner, in studs. X is to the right (negative
       goes to the left), Z is behind (negative goes in front).
 
   Sound
@@ -294,8 +438,9 @@ From any LocalScript:
     PetSpawner.react(Players.LocalPlayer)          -- all of the local player's pets, now
     PetSpawner.react(Players.LocalPlayer, "Snake") -- only the snake
 
-The dog barks and the snake hisses. PetSpawner.react(player) works for any
-player, not just the local one, and only on the device that calls it.
+The dog barks, the snake hisses, the bunny does a binky, the crab snaps and
+the dragon breathes fire. PetSpawner.react(player) works for any player, not
+just the local one, and only on the device that calls it.
 PetSpawner.getPets(player) gives you that player's pets; each one has a model
 (the Model in workspace.AnimatedPets). Set Every = false on a pet if it should
 only react when you say so.
@@ -340,10 +485,16 @@ The accessory moves with the closest body part. To pick the body part
 yourself, select the accessory and add an Attribute called Bone (type string)
 with one of these:
 
-  Dog: Body, Head, EarL, EarR, Jaw, Tongue, Lids, Tail, LegFL, LegFR, LegBL,
-    LegBR
+  Dog: Body, Head, EarL, EarR, Jaw, Tongue, Tail, LegFL, LegFR, LegBL, LegBR
   Snake: Head, Body1, Body2, Body3, Body4, Body5, Body6, Body7, Body8, Body9,
-    Body10, Tongue, Mouth, BrowL, BrowR
+    Body10, Tongue, BrowL, BrowR
+  Bunny: Body, Tail, Head, EarL, EarR, Muzzle, Nose, LegFL, LegFR, FootL,
+    FootR
+  Crab: Root, Body, StalkL, StalkR, ArmL, ForearmL, PincerL, FingerLIn,
+    FingerLOut, ArmR, ForearmR, PincerR, FingerRIn, FingerROut, LegFL, ShinFL,
+    LegFR, ShinFR, LegBL, ShinBL, LegBR, ShinBR
+  Dragon: Body, Head, Jaw, WingR, WingL, Tail1, Tail2, Tail3, LegFR, LegFL,
+    LegBR, LegBL
 
 Accessories keep their own size and position, and like the rest of the pet
 they're anchored and don't collide.
@@ -366,6 +517,15 @@ About the sounds that come with the pets:
   - Snake: The default hiss is "Snake Hiss 1 (SFX)" by Pro Sound Effects,
     licensed by Roblox for every experience. It has 2.8 seconds of silence at
     the start, that's why SoundStart is 2.8 by default.
+  - Bunny: The default squeak is "Squeeze Toy Squeaky Rubber With Noisemaker
+    Hits 9" by Pro Sound Effects, licensed by Roblox for every experience.
+  - Crab: The default snap is "Crab Claw Smaller Snaps Plasticky 3" by Pro
+    Sound Effects, licensed by Roblox for every experience. Its three clicks
+    match the three snaps of the animation, so with a sound of your own the
+    clicks may not line up with the claws.
+  - Dragon: The default whoosh is "Fire Whoosh 4" by Pro Sound Effects,
+    licensed by Roblox for every experience. It builds up slowly, that's why
+    SoundStart is 1.3 by default.
 
 
 THE WORDS IN THE BUBBLES
@@ -382,8 +542,8 @@ No pets show up
     StarterPlayer > StarterPlayerScripts (not in StarterPlayer itself, not in
     Workspace).
   - Open View > Output. Messages starting with [Pets] tell you what's wrong,
-    like a misspelled name in Config.Pets. The names are Dog and Snake, with
-    capital letters.
+    like a misspelled name in Config.Pets. The names are Dog, Snake, Bunny,
+    Crab and Dragon, with capital letters.
   - With GiveTo = "Attribute", only players with the Pet attribute get pets.
 
 The Output says "[Pets] AllPets is missing from ReplicatedStorage"
@@ -408,13 +568,13 @@ Too many pets for my server
 GOOD TO KNOW
 ------------
 
-- Each pet is 25 to 32 parts, all moved with a single workspace:BulkMoveTo
+- Each pet is 25 to 48 parts, all moved with a single workspace:BulkMoveTo
   per frame, so they're light even with a full server.
 - The pets live in a folder called AnimatedPets in Workspace, made on each
   player's device. They aren't on the server, so server scripts can't see them
   (on purpose).
-- Pets find the ground with a raycast, so they walk up ramps and stairs (and on
+- Pets find the ground with a raycast, so they go up ramps and stairs (and on
   top of terrain water). Where there's no floor under them, they stay at their
-  owner's feet height.
+  owner's feet height (the dragon flies that much higher).
 - When their owner teleports or respawns far away, the pets jump straight to
   their spots next to them.

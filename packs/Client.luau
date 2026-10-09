@@ -14,7 +14,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local folder = ReplicatedStorage:WaitForChild("{{FOLDER}}", 10)
 if not folder then
 	warn(
-		"[Pets] {{FOLDER}} is missing from ReplicatedStorage. Drag {{FOLDER}}.rbxm into ReplicatedStorage (see README.md)."
+		"[Pets] {{FOLDER}} is missing from ReplicatedStorage. Drag {{FOLDER}}.rbxm into ReplicatedStorage (see README.txt)."
 	)
 	return
 end

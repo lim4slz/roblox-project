@@ -15,5 +15,5 @@ local Pets = ReplicatedStorage:WaitForChild("Shared"):WaitForChild("Pets")
 local PetSpawner = require(Pets:WaitForChild("PetSpawner"))
 
 PetSpawner.start({
-	Pets = { "Dog", "Snake" },
+	Pets = { "Dog", "Snake", "Bunny", "Crab", "Dragon" },
 })

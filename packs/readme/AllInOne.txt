@@ -1,7 +1,6 @@
 {{TITLE_BLOCK}}
 
-Every animated pet in one install: {{PET_LIST}}. Out of the box every player
-gets all of them, and the Config lets you choose who gets which.
+{{INTRO}}
 
 It works in any Roblox game, R15 or R6, with or without StreamingEnabled. You
 drag two files into Studio and that's it: no server script, no RemoteEvents,
@@ -48,8 +47,8 @@ into the Studio window.
 
 {{PET_DOCS}}
 
-Each pet walks on its own spot next to its owner, so they don't bump into each
-other. You can move them with Spot.
+Each pet has its own spot next to its owner, so they don't bump into each
+other (the dragon flies over the others). You can move them with Spot.
 
 
 SETTINGS
@@ -87,7 +86,7 @@ What each one does:
       bubble grow with it.
 
   Spot
-      Where it walks next to its owner, in studs. X is to the right (negative
+      Where it goes next to its owner, in studs. X is to the right (negative
       goes to the left), Z is behind (negative goes in front).
 
   Sound
@@ -241,9 +240,7 @@ No pets show up
   - Check that {{FOLDER}} is in ReplicatedStorage and {{CLIENT}} is in
     StarterPlayer > StarterPlayerScripts (not in StarterPlayer itself, not in
     Workspace).
-  - Open View > Output. Messages starting with [Pets] tell you what's wrong,
-    like a misspelled name in Config.Pets. The names are {{PET_LIST}}, with
-    capital letters.
+{{OUTPUT_HINT}}
   - With GiveTo = "Attribute", only players with the Pet attribute get pets.
 
 The Output says "[Pets] {{FOLDER}} is missing from ReplicatedStorage"
@@ -273,8 +270,8 @@ GOOD TO KNOW
 - The pets live in a folder called AnimatedPets in Workspace, made on each
   player's device. They aren't on the server, so server scripts can't see them
   (on purpose).
-- Pets find the ground with a raycast, so they walk up ramps and stairs (and on
+- Pets find the ground with a raycast, so they go up ramps and stairs (and on
   top of terrain water). Where there's no floor under them, they stay at their
-  owner's feet height.
+  owner's feet height (the dragon flies that much higher).
 - When their owner teleports or respawns far away, the pets jump straight to
   their spots next to them.

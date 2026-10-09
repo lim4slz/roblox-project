@@ -1,6 +1,6 @@
 --[[
 	Pet settings. Change anything here and press Play to see it.
-	The full guide is in README.md, next to the files you dragged in.
+	The full guide is in README.txt, next to the files you dragged in.
 ]]
 
 local Config = {}
