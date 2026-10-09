@@ -8,7 +8,9 @@
 	  lune run scripts/convert_art -- <file.rbxm> <ToolName> [yaw degrees to undo]
 
 	Each line: size(x, y, z) at(x, y, z, rx, ry, rz), the at() helper of the
-	model files. "HANDLE" marks the handle. The yaw is the art's own turn
+	model files. "HANDLE" marks the body part the origin sits under (a tool's
+	Handle, else the model's PrimaryPart, else its biggest part) and [name] the
+	group (parent Model) the part was in. The yaw is the art's own turn
 	around Y (look at the parts' rotations); the Dog needed 6.47, the Crab 1.606.
 ]]
 
@@ -53,7 +55,21 @@ for _, part in tool:GetDescendants() do
 		table.insert(parts, part)
 	end
 end
-local handle = tool:FindFirstChild("Handle") or parts[1]
+-- The body: a tool's Handle, else the model's PrimaryPart, else its biggest part.
+local handle = tool:FindFirstChild("Handle")
+if not handle and tool:IsA("Model") and tool.PrimaryPart then
+	handle = tool.PrimaryPart
+end
+if not handle then
+	local biggest = 0
+	for _, part in parts do
+		local volume = part.Size.X * part.Size.Y * part.Size.Z
+		if volume > biggest then
+			biggest = volume
+			handle = part
+		end
+	end
+end
 
 -- Turn everything about the handle, then find the ground and the middle.
 local unyaw = CFrame.Angles(0, math.rad(-yaw), 0)
@@ -126,9 +142,15 @@ for _, part in parts do
 	table.insert(rows, {
 		y = cframe.Position.Y,
 		line = string.format(
-			"%-6s %-8s rgb(%d,%d,%d) size(%s, %s, %s) at(%s, %s, %s, %s, %s, %s)",
+			"%-6s %-8s %-14s rgb(%d,%d,%d) size(%s, %s, %s) at(%s, %s, %s, %s, %s, %s)",
 			if part == handle then "HANDLE" else "",
 			shape,
+			-- the group the artist put the part in (its parent Model), when there is one
+			if part.Parent
+					and part.Parent ~= tool
+					and part.Parent:IsA("Model")
+				then "[" .. part.Parent.Name .. "]"
+				else "",
 			math.floor(color.R * 255 + 0.5),
 			math.floor(color.G * 255 + 0.5),
 			math.floor(color.B * 255 + 0.5),

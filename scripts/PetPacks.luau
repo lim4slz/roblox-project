@@ -3,7 +3,7 @@
 	Builds the folders that go to the client:
 
 	  Work꞉ pet animation/
-	    Dog/          README.md + ReplicatedStorage/DogPet.rbxm
+	    Dog/          README.txt + ReplicatedStorage/DogPet.rbxm
 	                  + StarterPlayer/StarterPlayerScripts/DogPetClient.rbxm
 	    Snake/ ...    (one folder per pet)
 	    Dragon/       placeholder until its model arrives
@@ -64,7 +64,7 @@ PetPacks.Pets = {
 		bodyPart = "Body3",
 		textExample = '"SSSS!", "Hiss!"',
 		soundCredit = 'The default hiss is "Snake Hiss 1 (SFX)" by Pro Sound Effects, licensed by Roblox for every '
-			.. "experience. It has 2.8 seconds of silence at the start, that's why the default `SoundStart` is 2.8.",
+			.. "experience. It has 2.8 seconds of silence at the start, that's why SoundStart is 2.8 by default.",
 	},
 }
 
@@ -202,7 +202,8 @@ function PetPacks.templateModel(name: string)
 		part.Size = def.size
 		part.CFrame = def.cframe
 		part.Color = def.color
-		part.Material = Enum.Material.Plastic
+		part.Material = def.material or Enum.Material.Plastic
+		part.Transparency = def.transparency or 0
 		part.TopSurface = Enum.SurfaceType.Smooth
 		part.BottomSurface = Enum.SurfaceType.Smooth
 		if def.shape then
@@ -286,18 +287,60 @@ function PetPacks.demoPlace(pack)
 	return game
 end
 
--- README ------------------------------------------------------------------------
+-- README (plain text) ------------------------------------------------------------
 
-local function bonesList(name: string): string
+local WIDTH = 78
+
+-- Wraps `text` into lines of at most WIDTH characters: the first line starts
+-- with `first`, the others with `rest` (default: the same).
+local function wrap(text: string, first: string, rest: string?): string
 	local lines = {}
-	for _, bone in definitionOf(name).bones do
-		table.insert(lines, "`" .. bone.name .. "`")
+	local line = first
+	local fresh = true
+	for word in string.gmatch(text, "%S+") do
+		if not fresh and #line + 1 + #word > WIDTH then
+			table.insert(lines, line)
+			line = (rest or first) .. word
+		else
+			line = if fresh then line .. word else line .. " " .. word
+		end
+		fresh = false
 	end
-	return table.concat(lines, ", ")
+	table.insert(lines, line)
+	return table.concat(lines, "\n")
 end
 
--- Rows of { name, class?, note? } in aligned columns (utf8.len: the tree
--- characters are several bytes each).
+local function heading(text: string, underline: string): string
+	return text .. "\n" .. string.rep(underline, #text)
+end
+
+-- Code shown in a README: indented four spaces, tabs as four spaces.
+local function codeBlock(source: string): string
+	local lines = {}
+	for line in string.gmatch(trim(source) .. "\n", "(.-)\n") do
+		line = string.gsub(line, "\t", "    ")
+		table.insert(lines, if line == "" then "" else "    " .. line)
+	end
+	return table.concat(lines, "\n")
+end
+
+local function bonesList(name: string): string
+	local names = {}
+	for _, bone in definitionOf(name).bones do
+		table.insert(names, bone.name)
+	end
+	return table.concat(names, ", ")
+end
+
+-- "Dog, Snake and Crab"
+local function spoken(names: { string }): string
+	if #names == 1 then
+		return names[1]
+	end
+	return table.concat(names, ", ", 1, #names - 1) .. " and " .. names[#names]
+end
+
+-- Rows of { name, class?, note? } in aligned columns.
 local function columns(rows: { { string } }): string
 	local nameWidth, classWidth = 0, 0
 	for _, row in rows do
@@ -308,11 +351,11 @@ local function columns(rows: { { string } }): string
 	for _, row in rows do
 		local line = row[1]
 		if row[2] or row[3] then
-			line ..= string.rep(" ", nameWidth + 2 - (utf8.len(row[1]) :: number))
+			line ..= string.rep(" ", nameWidth + 3 - (utf8.len(row[1]) :: number))
 			line ..= if row[2] then row[2] else ""
 		end
 		if row[3] then
-			line ..= string.rep(" ", classWidth + 2 - (if row[2] then #row[2] else 0)) .. row[3]
+			line ..= string.rep(" ", if row[2] then classWidth + 3 - #row[2] else classWidth + 3) .. row[3]
 		end
 		table.insert(lines, (string.gsub(line, "%s+$", "")))
 	end
@@ -320,42 +363,40 @@ local function columns(rows: { { string } }): string
 end
 
 local function filesTree(pack): string
-	local client = pack.folder .. "Client"
 	return columns({
-		{ pack.dir .. "/" },
-		{ "├── README.md", nil, "you are here" },
-		{ "├── ReplicatedStorage/" },
-		{ "│   └── " .. pack.folder .. ".rbxm", nil, "drag onto ReplicatedStorage" },
-		{ "└── StarterPlayer/" },
-		{ "    └── StarterPlayerScripts/" },
-		{ "        └── " .. client .. ".rbxm", nil, "drag onto StarterPlayer > StarterPlayerScripts" },
+		{ "  " .. pack.dir .. "/" },
+		{ "    README.txt", nil, "this file" },
+		{ "    ReplicatedStorage/" },
+		{ "      " .. pack.folder .. ".rbxm", nil, "drag onto ReplicatedStorage" },
+		{ "    StarterPlayer/" },
+		{ "      StarterPlayerScripts/" },
+		{ "        " .. pack.folder .. "Client.rbxm", nil, "drag onto StarterPlayerScripts" },
 	})
 end
 
 local function explorerTree(pack): string
 	local rows = {
-		{ "ReplicatedStorage" },
-		{ "└── " .. pack.folder, "(Folder)" },
-		{ "    ├── Config", "(ModuleScript)", "all the settings" },
-		{ "    ├── Models", "(Folder)", if #pack.pets > 1 then "the look of each pet" else nil },
+		{ "  ReplicatedStorage" },
+		{ "    " .. pack.folder, "(Folder)" },
+		{ "      Config", "(ModuleScript)", "all the settings" },
+		{ "      Models", "(Folder)", if #pack.pets > 1 then "what each pet looks like" else nil },
 	}
-	for index, pet in pack.pets do
-		local branch = if index == #pack.pets then "└── " else "├── "
-		local note = if #pack.pets == 1 then "the look of the " .. PetPacks.Pets[pet].lower else nil
-		table.insert(rows, { "    │   " .. branch .. pet, "(Model)", note })
+	for _, pet in pack.pets do
+		local note = if #pack.pets == 1 then "what the " .. PetPacks.Pets[pet].lower .. " looks like" else nil
+		table.insert(rows, { "        " .. pet, "(Model)", note })
 	end
-	table.insert(rows, { "    └── Modules", "(Folder)", "the code, you don't need to touch it" })
-	local names = PetPacks.moduleNames(pack)
-	for index, name in names do
-		table.insert(
-			rows,
-			{ "        " .. (if index == #names then "└── " else "├── ") .. name, "(ModuleScript)" }
-		)
+	table.insert(rows, { "      Modules", "(Folder)", "the code, no need to touch it" })
+	for _, name in PetPacks.moduleNames(pack) do
+		table.insert(rows, { "        " .. name, "(ModuleScript)" })
 	end
-	table.insert(rows, { "StarterPlayer" })
-	table.insert(rows, { "└── StarterPlayerScripts" })
-	table.insert(rows, { "    └── " .. pack.folder .. "Client", "(LocalScript)", "starts the pets" })
+	table.insert(rows, { "  StarterPlayer" })
+	table.insert(rows, { "    StarterPlayerScripts" })
+	table.insert(rows, { "      " .. pack.folder .. "Client", "(LocalScript)", "starts the pets" })
 	return columns(rows)
+end
+
+local function petDoc(name: string): string
+	return trim(read("packs/pets/" .. name .. ".txt"))
 end
 
 function PetPacks.readme(pack): string
@@ -364,58 +405,68 @@ function PetPacks.readme(pack): string
 	end
 	local name = pack.pets[1]
 	local pet = PetPacks.Pets[name]
-	return fill(read("packs/readme/Pet.md"), {
-		TITLE = pack.title,
-		INTRO = pack.intro,
+	local upper = string.upper(pet.lower)
+	return fill(read("packs/readme/Pet.txt"), {
+		TITLE_BLOCK = heading(string.upper(pack.title), "="),
+		INTRO = wrap(pack.intro, ""),
 		NAME = name,
 		LOWER = pet.lower,
 		FOLDER = pack.folder,
 		CLIENT = pack.folder .. "Client",
 		FILES_TREE = filesTree(pack),
 		EXPLORER_TREE = explorerTree(pack),
-		PET_DOC = (string.gsub(read("packs/pets/" .. name .. ".md"), "%s+$", "")),
-		CONFIG = (string.gsub(PetPacks.configSource(pack), "%s+$", "")),
+		PET_DOC = petDoc(name),
+		CONFIG = codeBlock(PetPacks.configSource(pack)),
+		HEADING_ONLY = heading("ONLY SOME PLAYERS GET THE " .. upper .. " (GAME PASS, VIP, ADMINS...)", "-"),
+		HEADING_REACT = heading(
+			"MAKE THE " .. upper .. " " .. string.upper(pet.react) .. " FROM YOUR OWN SCRIPTS",
+			"-"
+		),
 		SOUND_WORD = pet.soundWord,
 		REACT = pet.react,
 		REACTS = pet.reacts,
 		BODY_PART = pet.bodyPart,
-		BONES = bonesList(name),
-		SOUND_CREDIT = pet.soundCredit,
+		BONES = wrap(bonesList(name), "  "),
+		SOUND_CREDIT = wrap(pet.soundCredit, ""),
 		TEXT_EXAMPLE = pet.textExample,
 		PART_COUNT = tostring(#definitionOf(name).parts),
 	})
 end
 
 function PetPacks.allInOneReadme(pack): string
-	local docs, bones, credits, packs = {}, {}, {}, {}
+	local docs, bones, credits, reactions = {}, {}, {}, {}
+	local fewest, most = math.huge, 0
 	for _, name in pack.pets do
 		local pet = PetPacks.Pets[name]
-		table.insert(docs, (string.gsub(read("packs/pets/" .. name .. ".md"), "%s+$", "")))
-		table.insert(bones, "- **" .. name .. "**: " .. bonesList(name))
-		table.insert(credits, "- " .. name .. ": " .. pet.soundCredit)
-		table.insert(packs, "`" .. name .. "`")
-	end
-	local reactions = {}
-	for _, name in pack.pets do
-		local pet = PetPacks.Pets[name]
+		local parts = #definitionOf(name).parts
+		fewest, most = math.min(fewest, parts), math.max(most, parts)
+		table.insert(docs, petDoc(name))
+		table.insert(bones, wrap(name .. ": " .. bonesList(name), "  ", "    "))
+		table.insert(credits, wrap(name .. ": " .. pet.soundCredit, "  - ", "    "))
 		table.insert(reactions, "the " .. pet.lower .. " " .. pet.reacts)
 	end
-	local sentence = if #reactions > 1
-		then table.concat(reactions, ", ", 1, #reactions - 1) .. " and " .. reactions[#reactions]
-		else reactions[1]
+	local sentence = spoken(reactions)
 	sentence = string.upper(string.sub(sentence, 1, 1)) .. string.sub(sentence, 2) .. "."
-	return fill(read("packs/readme/AllInOne.md"), {
-		REACT_SENTENCE = sentence,
-		TITLE = pack.title,
+	return fill(read("packs/readme/AllInOne.txt"), {
+		TITLE_BLOCK = heading(string.upper(pack.title), "="),
+		REACT_PARAGRAPH = wrap(
+			sentence
+				.. " PetSpawner.react(player) works for any player, not just the local one, and only on the device"
+				.. " that calls it. PetSpawner.getPets(player) gives you that player's pets; each one has a model"
+				.. " (the Model in workspace.AnimatedPets). Set Every = false on a pet if it should only react when"
+				.. " you say so.",
+			""
+		),
 		FOLDER = pack.folder,
 		CLIENT = pack.folder .. "Client",
-		PET_LIST = table.concat(packs, ", "),
+		PET_LIST = spoken(pack.pets),
 		FILES_TREE = filesTree(pack),
 		EXPLORER_TREE = explorerTree(pack),
-		PET_DOCS = table.concat(docs, "\n\n"),
-		CONFIG = (string.gsub(PetPacks.configSource(pack), "%s+$", "")),
+		PET_DOCS = table.concat(docs, "\n\n\n"),
+		CONFIG = codeBlock(PetPacks.configSource(pack)),
 		BONES = table.concat(bones, "\n"),
 		SOUND_CREDITS = table.concat(credits, "\n"),
+		PART_RANGE = if fewest == most then tostring(most) else fewest .. " to " .. most,
 	})
 end
 
@@ -480,7 +531,7 @@ function PetPacks.build(options: { out: string, places: string? })
 		)
 		local readme = PetPacks.readme(pack)
 		assert(not string.find(readme, "{{", 1, true), pack.dir .. " README has an unfilled {{placeholder}}")
-		writeFile(dir .. "/README.md", readme)
+		writeFile(dir .. "/README.txt", readme)
 		if options.places then
 			writeFile(
 				options.places .. "/" .. pack.folder .. ".rbxl",
@@ -490,7 +541,7 @@ function PetPacks.build(options: { out: string, places: string? })
 		table.insert(summary, { pack = pack, scripts = scripts })
 	end
 	for _, name in PetPacks.Placeholders do
-		writeFile(out .. "/" .. name .. "/README.md", read("packs/readme/" .. name .. ".md"))
+		writeFile(out .. "/" .. name .. "/README.txt", read("packs/readme/" .. name .. ".txt"))
 	end
 	return summary
 end
@@ -520,7 +571,7 @@ function PetPacks.verify(out: string)
 			fs.readFile(dir .. "/StarterPlayer/StarterPlayerScripts/" .. pack.folder .. "Client.rbxm")
 		)
 		assert(#client == 1 and client[1].ClassName == "LocalScript", pack.dir .. ": bad client script")
-		assert(fs.isFile(dir .. "/README.md"), pack.dir .. ": no README")
+		assert(fs.isFile(dir .. "/README.txt"), pack.dir .. ": no README")
 	end
 	return true
 end

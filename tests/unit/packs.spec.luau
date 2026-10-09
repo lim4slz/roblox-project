@@ -42,17 +42,17 @@ return function(t)
 			build()
 			for _, pack in PetPacks.Packs do
 				local dir = OUT .. "/" .. pack.dir
-				expect(fs.isFile(dir .. "/README.md")).toBe(true)
+				expect(fs.isFile(dir .. "/README.txt")).toBe(true)
 				expect(fs.isFile(dir .. "/ReplicatedStorage/" .. pack.folder .. ".rbxm")).toBe(true)
 				expect(fs.isFile(dir .. "/StarterPlayer/StarterPlayerScripts/" .. pack.folder .. "Client.rbxm")).toBe(
 					true
 				)
 				local entries = fs.readDir(dir)
 				table.sort(entries)
-				expect(table.concat(entries, ",")).toBe("README.md,ReplicatedStorage,StarterPlayer")
+				expect(table.concat(entries, ",")).toBe("README.txt,ReplicatedStorage,StarterPlayer")
 			end
 			for _, name in PetPacks.Placeholders do
-				expect(fs.isFile(OUT .. "/" .. name .. "/README.md")).toBe(true)
+				expect(fs.isFile(OUT .. "/" .. name .. "/README.txt")).toBe(true)
 			end
 			-- Every pet has a single pet pack, and All in One has them all.
 			local single, all = {}, nil
@@ -72,15 +72,51 @@ return function(t)
 		it("documents every setting of the Config in the README, in English", function()
 			build()
 			for _, pack in PetPacks.Packs do
-				local readme = fs.readFile(OUT .. "/" .. pack.dir .. "/README.md")
-				expect(string.find(readme, PetPacks.configSource(pack), 1, true)).never.toBeNil()
+				local readme = fs.readFile(OUT .. "/" .. pack.dir .. "/README.txt")
+				-- The whole Config is in it, as an indented block.
+				for line in string.gmatch(PetPacks.configSource(pack), "[^\n]+") do
+					local shown = "    " .. string.gsub(line, "\t", "    ")
+					expect(string.find(readme, shown, 1, true)).never.toBeNil()
+				end
 				for _, key in { "Pets", "GiveTo", "Attribute", "ShowOtherPlayersPets" } do
-					expect(string.find(readme, "`Config." .. key .. "`", 1, true)).never.toBeNil()
+					expect(string.find(readme, "\n  Config." .. key .. "\n", 1, true)).never.toBeNil()
 				end
 				for _, key in { "Scale", "Spot", "Sound", "SoundStart", "Volume", "Texts", "Every" } do
-					expect(string.find(readme, "`" .. key .. "`", 1, true)).never.toBeNil()
+					expect(string.find(readme, "\n  " .. key .. "\n", 1, true)).never.toBeNil()
 				end
 				expect(string.find(readme, "[ãõçáéíóúâêôà]")).toBeNil()
+			end
+		end)
+
+		it("writes the READMEs as plain text a person would write, not markdown", function()
+			build()
+			local files = {}
+			for _, pack in PetPacks.Packs do
+				table.insert(files, OUT .. "/" .. pack.dir .. "/README.txt")
+			end
+			for _, name in PetPacks.Placeholders do
+				table.insert(files, OUT .. "/" .. name .. "/README.txt")
+			end
+			for _, path in files do
+				local readme = fs.readFile(path)
+				for _, markdown in { "```", "**", "`", "|---", "](", "\n#" } do
+					expect(string.find(readme, markdown, 1, true)).toBeNil()
+				end
+				-- Headings are underlined with = or - of the same length.
+				local headings = 0
+				for title, rule in string.gmatch(readme, "\n?([^\n]+)\n([=%-]+)\n") do
+					if #rule > 3 then
+						expect(#rule).toBe(#title)
+						headings += 1
+					end
+				end
+				expect(headings).toBeGreaterThan(0)
+				-- Prose is wrapped; only code (indented four spaces) may run long.
+				for line in string.gmatch(readme, "[^\n]+") do
+					if string.sub(line, 1, 4) ~= "    " then
+						expect(utf8.len(line)).toBeLessThanOrEqual(79)
+					end
+				end
 			end
 		end)
 

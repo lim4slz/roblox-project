@@ -21,9 +21,17 @@
 ]]
 
 export type BoneDef = { name: string, parent: string?, pivot: CFrame }
--- `shape` defaults to a block.
-export type PartDef =
-	{ name: string, bone: string, size: Vector3, cframe: CFrame, color: Color3, shape: Enum.PartType? }
+-- `shape` defaults to a block, `material` to plastic, `transparency` to 0.
+export type PartDef = {
+	name: string,
+	bone: string,
+	size: Vector3,
+	cframe: CFrame,
+	color: Color3,
+	shape: Enum.PartType?,
+	material: Enum.Material?,
+	transparency: number?,
+}
 export type ModelDef = { bones: { BoneDef }, parts: { PartDef } }
 -- Local transform per bone name. Missing bones stay in their rest pose.
 export type Pose = { [string]: CFrame }

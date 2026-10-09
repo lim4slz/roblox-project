@@ -8,7 +8,9 @@ de pets animados que também são vendidos ao cliente como pastas de arrastar e 
 - Tudo que vai pro cliente é em inglês: código, comentários, Config, READMEs.
 - A entrega fica em `Work꞉ pet animation/` (o "꞉" é U+A789: o Windows não aceita ":" em nome de pasta, e com ":"
   o git e o zip quebram lá). Seis pastas: Dog, Snake, Bunny, Crab, Dragon e All in One. Dentro de cada pet, pastas
-  com os nomes do Explorer do Roblox (`ReplicatedStorage/`, `StarterPlayer/StarterPlayerScripts/`) e um README.md.
+  com os nomes do Explorer do Roblox (`ReplicatedStorage/`, `StarterPlayer/StarterPlayerScripts/`) e um README.txt.
+- Nada em .md no que vai pro cliente: README.txt em texto puro, com cara de escrito por gente (títulos sublinhados,
+  código recuado, sem markdown). Os modelos ficam em `packs/readme/*.txt` e `packs/pets/*.txt`.
 - Nunca fingir teste. O que não dá pra testar fora do Studio vai escrito como limitação.
 
 ## Estado
@@ -39,9 +41,9 @@ Tudo roda no cliente, nada replica. Arquivos em `src/shared/Pets`:
 2. `src/shared/Pets/DragonModel.luau`, `DragonAnimation.luau`, `DragonPet.luau` seguindo o Dog/Snake
    (mesma API: `new(seed, every)`, `step`, `pose`, `react`, `gait`, `Every`; a classe com `Defaults`).
 3. `tests/unit/dragon.spec.luau` no estilo de `snake.spec.luau`.
-4. `packs/config/Dragon.luau` (valores iguais aos `Defaults`) e `packs/pets/Dragon.md`.
+4. `packs/config/Dragon.luau` (valores iguais aos `Defaults`) e `packs/pets/Dragon.txt`.
 5. Registrar em `scripts/PetPacks.luau` (`PetPacks.Pets`, um pack próprio e o All in One) e tirar "Dragon" de
-   `PetPacks.Placeholders`; apagar `packs/readme/Dragon.md`. Pra testar no jogo, pôr em `src/client/Pets/init.client.luau`.
+   `PetPacks.Placeholders`; apagar `packs/readme/Dragon.txt`. Pra testar no jogo, pôr em `src/client/Pets/init.client.luau`.
 6. `lune run tests/run`, `bash scripts/analyze.sh`, `lune run scripts/build_pet_packs` (gera a pasta e o zip).
 
 ## Comandos

@@ -217,7 +217,8 @@ function PetKit.build(
 		else
 			local block = Instance.new("Part")
 			block.Color = def.color
-			block.Material = Enum.Material.Plastic
+			block.Material = def.material or Enum.Material.Plastic
+			block.Transparency = def.transparency or 0
 			block.TopSurface = Enum.SurfaceType.Smooth
 			block.BottomSurface = Enum.SurfaceType.Smooth
 			if def.shape then

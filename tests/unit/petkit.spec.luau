@@ -161,6 +161,44 @@ return function(t)
 			expect(result.primary).toBe(true)
 		end)
 
+		it("gives definition parts their material and transparency", function()
+			local result = Shared.run(function()
+				local PetKit = require(game:GetService("ReplicatedStorage").Shared.Pets.PetKit)
+				local definition = {
+					bones = { { name = "Body", pivot = CFrame.identity } },
+					parts = {
+						{
+							name = "Fur",
+							bone = "Body",
+							size = Vector3.one,
+							cframe = CFrame.identity,
+							color = Color3.new(1, 1, 1),
+						},
+						{
+							name = "Flame",
+							bone = "Body",
+							size = Vector3.one,
+							cframe = CFrame.identity,
+							color = Color3.new(1, 0.5, 0),
+							material = Enum.Material.Neon,
+							transparency = 0.2,
+						},
+					},
+				}
+				local _, parts = PetKit.build("Test", definition, nil, 1)
+				return {
+					furMaterial = parts[1].Material,
+					furTransparency = parts[1].Transparency,
+					flameMaterial = parts[2].Material,
+					flameTransparency = parts[2].Transparency,
+				}
+			end)
+			expect(result.furMaterial).toBe(roblox.Enum.Material.Plastic)
+			expect(result.furTransparency).toBe(0)
+			expect(result.flameMaterial).toBe(roblox.Enum.Material.Neon)
+			expect(result.flameTransparency).toBeCloseTo(0.2, 1e-6)
+		end)
+
 		it("builds plain blocks (and wedges) from the definition when there is no template", function()
 			local result = Shared.run(function()
 				local Pets = game:GetService("ReplicatedStorage").Shared.Pets

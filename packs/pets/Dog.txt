@@ -1,0 +1,18 @@
+WHAT THE DOG DOES
+-----------------
+
+A blocky cartoon dog with big floppy ears and a white-tipped tail. None of it
+is a canned animation: it all reacts to how fast its owner is moving.
+
+- Standing: a happy little bounce. It looks around with its head tilted, wags
+  its tail, blinks now and then and turns to look at its owner.
+- Walking: a bouncy waddle, the head nodding with the steps, ears flopping.
+- Running: when it falls behind it gallops with big hops, ears back and the
+  tongue out.
+- WOOF!: every few seconds it barks, one to three times in a row. It crouches,
+  hops, snaps its head up, opens its mouth, squints happily and wags faster,
+  and a WOOF! bubble pops up with the bark (a slightly different pitch each
+  time).
+
+It walks a little behind its owner, on the right. When its owner stops, it
+trots to its spot, stops and looks at them.

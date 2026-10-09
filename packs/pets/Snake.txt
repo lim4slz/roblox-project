@@ -1,0 +1,22 @@
+WHAT THE SNAKE DOES
+-------------------
+
+A long blocky snake (about 14 studs) in two shades of green, with a forked
+tongue. None of it is a canned animation:
+
+- Slithering: the head weaves left and right as it goes, and every piece of
+  the body slides through the exact S-shaped path the head took, like a real
+  snake. On stairs and slopes the body follows the ground the head went over,
+  one piece at a time.
+- Hurrying: when it falls behind it goes faster, with wider curves and the
+  head kept low.
+- Standing: the front of the body rises a little, the head sways and turns to
+  look at its owner, and a slow ripple runs down the neck.
+- The tongue: it flicks its forked tongue in and out every second or two,
+  sometimes twice in a row.
+- HISS!: every few seconds it rears up high, opens its mouth to show its fangs,
+  frowns, shakes its head and goes wild with the tongue, with a HSSS! bubble
+  and a hiss.
+
+Its head stays a little behind its owner, on the left, and the body trails
+behind.
