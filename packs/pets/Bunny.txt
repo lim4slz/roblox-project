@@ -1,0 +1,20 @@
+WHAT THE BUNNY DOES
+-------------------
+
+A white blocky bunny with long pink-lined ears and a fluffy tail. None of it
+is a canned animation: it all reacts to how fast its owner is moving.
+
+- Sitting: it breathes, twitches its nose in quick little bursts, flicks or
+  turns one ear at a time to listen, looks around and blinks.
+- Hopping: a crouch, a push with the long hind feet, an arc through the air
+  with the ears streaming back, front paws first on landing, then the hind
+  feet, and the ears flop forward.
+- Running: when it falls behind, the hops get longer, higher and faster, with
+  the body stretched out.
+- Binky!: every few seconds it does a binky, the jump real bunnies do when
+  they're happy. It crouches, springs straight up with a twist, kicks its
+  hind feet out, flaps its ears, shuts its eyes, opens its mouth and lands
+  with a little squash, with a pop-up bubble and a squeak.
+
+It hops along on its owner's right, a little behind. When its owner stops, it
+hops to its spot and sits down.

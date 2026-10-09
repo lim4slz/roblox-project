@@ -1,0 +1,23 @@
+WHAT THE DRAGON DOES
+--------------------
+
+A green blocky dragon with yellow wings, two horns and little fangs. None of
+it is a canned animation: it all reacts to how fast its owner is moving.
+
+- Hovering: it flies about 2 studs off the ground next to its owner, beating
+  its wings (a quick downstroke that lifts it, a slower upstroke), its legs
+  dangling and its tail swaying. It blinks and looks around.
+- Flying: when its owner walks it leans into the flight and flaps a little
+  harder. When it falls behind it stretches out and flaps hard, legs tucked
+  back and tail straight.
+- Landing: when its owner stands still for 6 seconds it lands next to them,
+  folds its wings back and sits, looking around. As soon as its owner moves
+  it takes off again.
+- Fire!: every few seconds it rears its head back to take a breath, then
+  throws it forward with the jaw wide open and breathes a stream of flames,
+  wings beating hard, with a pop-up bubble and the whoosh of the fire. The
+  flames are four glowing Neon blocks that hide inside its head the rest of
+  the time.
+
+It flies behind its owner, on the right, a bit higher than the other pets, so
+it doesn't bump into them.
