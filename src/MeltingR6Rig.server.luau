@@ -1,15 +1,12 @@
 --[[
-	Rig R6 do MeltingR6
+	Monta o rig R6 do MeltingR6 (Humanoid, HumanoidRootPart e os Motor6D).
 
-	1. Importe o MeltingR6.glb no Studio (Avatar > Importer 3D, ou File > Import 3D)
-	   com as opções padrão. "Merge Meshes" tem que ficar desligado.
-	2. View > Command Bar, cole este arquivo inteiro e aperte Enter.
+	No jogo: deixe este Script no ServerScriptService. Quando o servidor liga, todo MeltingR6
+	importado que estiver no Workspace vira um personagem R6 montado.
 
-	Se o modelo importado estiver selecionado, ele usa a seleção; se não, procura no Workspace.
-	Também funciona como Script no ServerScriptService (aí o rig é montado quando o jogo roda).
+	No Studio (pra animar no Animation Editor): copie tudo daqui, cole na Command Bar e aperte
+	Enter. Aí o rig fica salvo no place e o script não mexe mais nele.
 ]]
-
-local NOME_FINAL = "MeltingR6"
 
 local CORPO = { "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" }
 
@@ -54,32 +51,33 @@ local function serveDeBase(obj)
 	return true
 end
 
-local function acharModelo()
+local function acharModelos()
+	local achados = {}
+	local function olhar(obj)
+		local atual = obj
+		while atual and atual ~= game and atual ~= workspace do
+			if serveDeBase(atual) then
+				if not table.find(achados, atual) then
+					table.insert(achados, atual)
+				end
+				return
+			end
+			atual = atual.Parent
+		end
+	end
+
 	local ok, selecao = pcall(function()
 		return game:GetService("Selection"):Get()
 	end)
 	if ok then
 		for _, obj in selecao do
-			local atual = obj
-			while atual and atual ~= game do
-				if serveDeBase(atual) then
-					return atual
-				end
-				atual = atual.Parent
-			end
+			olhar(obj)
 		end
-	end
-
-	local porNome = workspace:FindFirstChild(NOME_FINAL)
-	if porNome and serveDeBase(porNome) then
-		return porNome
 	end
 	for _, obj in workspace:GetChildren() do
-		if serveDeBase(obj) then
-			return obj
-		end
+		olhar(obj)
 	end
-	return nil
+	return achados
 end
 
 local function montar(modelo)
@@ -199,7 +197,6 @@ local function montar(modelo)
 	Instance.new("Animator").Parent = humanoide
 
 	modelo.PrimaryPart = raiz
-	modelo.Name = NOME_FINAL
 
 	-- se a malha veio girada dentro da peça, o rig funciona igual, mas os C0 não ficam
 	-- com os valores de sempre (scripts que escrevem Neck.C0 fixo iam girar a cabeça)
@@ -212,10 +209,12 @@ local function montar(modelo)
 	end
 end
 
-local modelo = acharModelo()
-if not modelo then
-	warn("[MeltingR6] Não achei o modelo importado (precisa ter Head, Torso, Left Arm, Right Arm, "
-		.. "Left Leg e Right Leg). Importe o MeltingR6.glb sem Merge Meshes e rode de novo.")
+local modelos = acharModelos()
+if #modelos == 0 then
+	if not workspace:FindFirstChildWhichIsA("Humanoid", true) then
+		warn("[MeltingR6] Não achei o modelo importado no Workspace (precisa ter Head, Torso, "
+			.. "Left Arm, Right Arm, Left Leg e Right Leg). Importe o MeltingR6.glb sem Merge Meshes.")
+	end
 	return
 end
 
@@ -225,22 +224,28 @@ pcall(function()
 	gravacao = historico:TryBeginRecording("Montar rig R6")
 end)
 
-local ok, erro = pcall(montar, modelo)
+local montados = {}
+local tudoCerto = true
+for _, modelo in modelos do
+	local ok, erro = pcall(montar, modelo)
+	if ok then
+		table.insert(montados, modelo)
+		print("[MeltingR6] Rig R6 montado: " .. modelo:GetFullName())
+	else
+		tudoCerto = false
+		warn("[MeltingR6] Erro ao montar " .. modelo:GetFullName() .. ": " .. tostring(erro))
+	end
+end
 
 if gravacao then
 	pcall(function()
 		historico:FinishRecording(
 			gravacao,
-			if ok then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel
+			if tudoCerto then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel
 		)
 	end)
 end
 
-if ok then
-	pcall(function()
-		game:GetService("Selection"):Set({ modelo })
-	end)
-	print("[MeltingR6] Rig R6 montado: " .. modelo:GetFullName())
-else
-	warn("[MeltingR6] Erro ao montar o rig: " .. tostring(erro))
-end
+pcall(function()
+	game:GetService("Selection"):Set(montados)
+end)
