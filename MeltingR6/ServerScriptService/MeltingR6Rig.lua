@@ -1,17 +1,17 @@
 --[[
-	Monta o rig R6 do MeltingR6 (Humanoid, HumanoidRootPart e os Motor6D).
+	Builds the R6 rig for MeltingR6 (Humanoid, HumanoidRootPart and the Motor6Ds).
 
-	No jogo: deixe este Script no ServerScriptService. Quando o servidor liga, todo MeltingR6
-	importado que estiver no Workspace vira um personagem R6 montado.
+	In a game: keep this Script in ServerScriptService. When the server starts, every imported
+	MeltingR6 sitting in Workspace gets turned into a working R6 character.
 
-	No Studio (pra animar no Animation Editor): copie tudo daqui, cole na Command Bar e aperte
-	Enter. Aí o rig fica salvo no place e o script não mexe mais nele.
+	In Studio (to animate it in the Animation Editor): copy all of this, paste it into the
+	Command Bar and hit Enter. The rig gets saved into the place and this script leaves it alone.
 ]]
 
-local CORPO = { "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" }
+local BODY = { "Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg" }
 
--- C0 padrão do R6 (os mesmos do Rig Builder), no espaço do torso
-local JUNTAS = {
+-- stock R6 C0s (same as the Rig Builder), in torso space
+local JOINTS = {
 	{ "RootJoint", "HumanoidRootPart", "Torso", CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0) },
 	{ "Neck", "Torso", "Head", CFrame.new(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0) },
 	{ "Right Shoulder", "Torso", "Right Arm", CFrame.new(1, 0.5, 0, 0, 0, 1, 0, 1, 0, -1, 0, 0) },
@@ -20,148 +20,148 @@ local JUNTAS = {
 	{ "Left Hip", "Torso", "Left Leg", CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0) },
 }
 
--- "Left Arm", "Left_Arm" e "LeftArm" contam como o mesmo nome
-local function chave(nome)
-	return (string.lower(nome):gsub("[^%w]", ""))
+-- "Left Arm", "Left_Arm" and "LeftArm" all count as the same name
+local function key(name)
+	return (string.lower(name):gsub("[^%w]", ""))
 end
 
-local function pecasDe(modelo)
-	local pecas = {}
-	for _, obj in modelo:GetDescendants() do
+local function partsOf(model)
+	local parts = {}
+	for _, obj in model:GetDescendants() do
 		if obj:IsA("BasePart") then
-			local k = chave(obj.Name)
-			if not pecas[k] then
-				pecas[k] = obj
+			local k = key(obj.Name)
+			if not parts[k] then
+				parts[k] = obj
 			end
 		end
 	end
-	return pecas
+	return parts
 end
 
-local function serveDeBase(obj)
+local function isUnrigged(obj)
 	if not obj:IsA("Model") or obj:FindFirstChildWhichIsA("Humanoid") then
 		return false
 	end
-	local pecas = pecasDe(obj)
-	for _, nome in CORPO do
-		if not pecas[chave(nome)] then
+	local parts = partsOf(obj)
+	for _, name in BODY do
+		if not parts[key(name)] then
 			return false
 		end
 	end
 	return true
 end
 
-local function acharModelos()
-	local achados = {}
-	local function olhar(obj)
-		local atual = obj
-		while atual and atual ~= game and atual ~= workspace do
-			if serveDeBase(atual) then
-				if not table.find(achados, atual) then
-					table.insert(achados, atual)
+local function findModels()
+	local found = {}
+	local function check(obj)
+		local current = obj
+		while current and current ~= game and current ~= workspace do
+			if isUnrigged(current) then
+				if not table.find(found, current) then
+					table.insert(found, current)
 				end
 				return
 			end
-			atual = atual.Parent
+			current = current.Parent
 		end
 	end
 
-	local ok, selecao = pcall(function()
+	local ok, selection = pcall(function()
 		return game:GetService("Selection"):Get()
 	end)
 	if ok then
-		for _, obj in selecao do
-			olhar(obj)
+		for _, obj in selection do
+			check(obj)
 		end
 	end
 	for _, obj in workspace:GetChildren() do
-		olhar(obj)
+		check(obj)
 	end
-	return achados
+	return found
 end
 
-local function montar(modelo)
-	local pecas = pecasDe(modelo)
-	local partes = {}
-	local doCorpo = {}
-	for _, nome in CORPO do
-		local p = pecas[chave(nome)]
-		p.Name = nome
-		p.Parent = modelo -- o Humanoid procura as partes direto no modelo
-		partes[nome] = p
-		doCorpo[p] = true
+local function rig(model)
+	local found = partsOf(model)
+	local parts = {}
+	local isBody = {}
+	for _, name in BODY do
+		local p = found[key(name)]
+		p.Name = name
+		p.Parent = model -- the Humanoid looks for the limbs directly under the model
+		parts[name] = p
+		isBody[p] = true
 	end
-	local torso = partes.Torso
+	local torso = parts.Torso
 
-	local function centroPernas()
-		return (partes["Left Leg"].Position + partes["Right Leg"].Position) / 2
-	end
-
-	-- escala: no R6 o centro do torso fica 2 studs acima do centro das pernas
-	local altura = (torso.Position - centroPernas()).Magnitude
-	if math.abs(altura - 2) > 0.01 then
-		modelo:ScaleTo(modelo:GetScale() * 2 / altura)
+	local function legsCenter()
+		return (parts["Left Leg"].Position + parts["Right Leg"].Position) / 2
 	end
 
-	-- referencial do corpo tirado das posições das peças, então não importa
-	-- como o importador girou o modelo
-	local cima = (torso.Position - centroPernas()).Unit
-	local lado = partes["Right Arm"].Position - partes["Left Arm"].Position
-	local direita = (lado - cima * lado:Dot(cima)).Unit
-	local atual = CFrame.fromMatrix(torso.Position, direita, cima)
-
-	-- deixa em pé, olhando para o mesmo lado
-	local frente = atual.LookVector * Vector3.new(1, 0, 1)
-	if frente.Magnitude < 1e-3 then
-		frente = Vector3.new(0, 0, -1)
-	end
-	local corpo = CFrame.lookAt(torso.Position, torso.Position + frente.Unit)
-	if (atual.UpVector - corpo.UpVector).Magnitude > 1e-4 then
-		modelo:PivotTo(corpo * atual:Inverse() * modelo:GetPivot())
+	-- scale: on an R6 the torso center sits 2 studs above the legs center
+	local height = (torso.Position - legsCenter()).Magnitude
+	if math.abs(height - 2) > 0.01 then
+		model:ScaleTo(model:GetScale() * 2 / height)
 	end
 
-	local raiz = Instance.new("Part")
-	raiz.Name = "HumanoidRootPart"
-	raiz.Size = Vector3.new(2, 2, 1)
-	raiz.CFrame = corpo
-	raiz.Transparency = 1
-	raiz.CanCollide = false
-	raiz.Anchored = false
-	raiz.Parent = modelo
-	partes.HumanoidRootPart = raiz
+	-- body frame taken from where the parts are, so it doesn't matter
+	-- how the importer turned the model
+	local up = (torso.Position - legsCenter()).Unit
+	local side = parts["Right Arm"].Position - parts["Left Arm"].Position
+	local right = (side - up * side:Dot(up)).Unit
+	local current = CFrame.fromMatrix(torso.Position, right, up)
 
-	for nome, p in partes do
-		if nome ~= "HumanoidRootPart" then
+	-- stand it up, still facing the same way
+	local forward = current.LookVector * Vector3.new(1, 0, 1)
+	if forward.Magnitude < 1e-3 then
+		forward = Vector3.new(0, 0, -1)
+	end
+	local body = CFrame.lookAt(torso.Position, torso.Position + forward.Unit)
+	if (current.UpVector - body.UpVector).Magnitude > 1e-4 then
+		model:PivotTo(body * current:Inverse() * model:GetPivot())
+	end
+
+	local root = Instance.new("Part")
+	root.Name = "HumanoidRootPart"
+	root.Size = Vector3.new(2, 2, 1)
+	root.CFrame = body
+	root.Transparency = 1
+	root.CanCollide = false
+	root.Anchored = false
+	root.Parent = model
+	parts.HumanoidRootPart = root
+
+	for name, p in parts do
+		if name ~= "HumanoidRootPart" then
 			p.Anchored = false
 			p.Massless = false
-			p.CanCollide = nome == "Torso" or nome == "Head"
+			p.CanCollide = name == "Torso" or name == "Head"
 			pcall(function()
 				p.CollisionFidelity = Enum.CollisionFidelity.Box
 			end)
 		end
 	end
 
-	for _, j in JUNTAS do
-		local p0, p1 = partes[j[2]], partes[j[3]]
-		local junta = corpo * j[4]
+	for _, j in JOINTS do
+		local p0, p1 = parts[j[2]], parts[j[3]]
+		local joint = body * j[4]
 		local motor = Instance.new("Motor6D")
 		motor.Name = j[1]
 		motor.Part0 = p0
 		motor.Part1 = p1
-		motor.C0 = p0.CFrame:ToObjectSpace(junta)
-		motor.C1 = p1.CFrame:ToObjectSpace(junta)
+		motor.C0 = p0.CFrame:ToObjectSpace(joint)
+		motor.C1 = p1.CFrame:ToObjectSpace(joint)
 		motor.MaxVelocity = 0.1
 		motor.Parent = p0
 	end
 
-	-- o resto (olho, dentes, gengiva, nervo, boca, órbitas) é soldado na parte mais próxima
-	for _, obj in modelo:GetDescendants() do
-		if obj:IsA("BasePart") and not doCorpo[obj] and obj ~= raiz then
-			local alvo, menor = torso, math.huge
-			for _, nome in CORPO do
-				local d = (partes[nome].Position - obj.Position).Magnitude
-				if d < menor then
-					alvo, menor = partes[nome], d
+	-- everything else (eye, teeth, gums, nerve, mouth, sockets) gets welded to the closest limb
+	for _, obj in model:GetDescendants() do
+		if obj:IsA("BasePart") and not isBody[obj] and obj ~= root then
+			local target, closest = torso, math.huge
+			for _, name in BODY do
+				local d = (parts[name].Position - obj.Position).Magnitude
+				if d < closest then
+					target, closest = parts[name], d
 				end
 			end
 			obj.Anchored = false
@@ -169,83 +169,82 @@ local function montar(modelo)
 			obj.CanCollide = false
 			obj.CanTouch = false
 			obj.CanQuery = false
-			obj.Parent = modelo
-			local solda = Instance.new("Weld")
-			solda.Name = "Solda"
-			solda.Part0 = alvo
-			solda.Part1 = obj
-			solda.C0 = alvo.CFrame:ToObjectSpace(obj.CFrame)
-			solda.Parent = obj
+			obj.Parent = model
+			local weld = Instance.new("Weld")
+			weld.Part0 = target
+			weld.Part1 = obj
+			weld.C0 = target.CFrame:ToObjectSpace(obj.CFrame)
+			weld.Parent = obj
 		end
 	end
 
-	-- limpa as pastas/modelos que o importador criou e ficaram vazios
-	local apagou = true
-	while apagou do
-		apagou = false
-		for _, obj in modelo:GetDescendants() do
+	-- clean up the empty folders/models the importer left behind
+	local removed = true
+	while removed do
+		removed = false
+		for _, obj in model:GetDescendants() do
 			if (obj:IsA("Model") or obj:IsA("Folder")) and #obj:GetChildren() == 0 then
 				obj:Destroy()
-				apagou = true
+				removed = true
 			end
 		end
 	end
 
-	local humanoide = Instance.new("Humanoid")
-	humanoide.RigType = Enum.HumanoidRigType.R6
-	humanoide.Parent = modelo
-	Instance.new("Animator").Parent = humanoide
+	local humanoid = Instance.new("Humanoid")
+	humanoid.RigType = Enum.HumanoidRigType.R6
+	humanoid.Parent = model
+	Instance.new("Animator").Parent = humanoid
 
-	modelo.PrimaryPart = raiz
+	model.PrimaryPart = root
 
-	-- se a malha veio girada dentro da peça, o rig funciona igual, mas os C0 não ficam
-	-- com os valores de sempre (scripts que escrevem Neck.C0 fixo iam girar a cabeça)
-	local alinhado = torso.CFrame.LookVector:Dot(corpo.LookVector) > 0.99
-		and torso.CFrame.UpVector:Dot(corpo.UpVector) > 0.99
-	if not alinhado then
-		warn("[MeltingR6] A malha veio girada na importação. O rig funciona, mas os C0 ficaram "
-			.. "fora do padrão. Se for usar scripts com C0 fixo (ex.: cabeça seguindo o mouse), "
-			.. "reimporte mudando World Forward (Front/Back) até o rosto aparecer de frente no preview.")
+	-- if the mesh came in turned inside its part, the rig still works, but the C0s won't have
+	-- the usual values (scripts that write a fixed Neck.C0 would spin the head around)
+	local aligned = torso.CFrame.LookVector:Dot(body.LookVector) > 0.99
+		and torso.CFrame.UpVector:Dot(body.UpVector) > 0.99
+	if not aligned then
+		warn("[MeltingR6] The mesh came in rotated. The rig works fine, but the C0s aren't the "
+			.. "stock values. If you use scripts with a fixed C0 (like a head that follows the mouse), "
+			.. "import it again switching World Forward (Front/Back) until the face points forward in the preview.")
 	end
 end
 
-local modelos = acharModelos()
-if #modelos == 0 then
+local models = findModels()
+if #models == 0 then
 	if not workspace:FindFirstChildWhichIsA("Humanoid", true) then
-		warn("[MeltingR6] Não achei o modelo importado no Workspace (precisa ter Head, Torso, "
-			.. "Left Arm, Right Arm, Left Leg e Right Leg). Importe o MeltingR6.glb sem Merge Meshes.")
+		warn("[MeltingR6] Couldn't find the imported model in Workspace (it needs Head, Torso, "
+			.. "Left Arm, Right Arm, Left Leg and Right Leg). Import MeltingR6.glb with Merge Meshes off.")
 	end
 	return
 end
 
-local historico = game:GetService("ChangeHistoryService")
-local gravacao
+local history = game:GetService("ChangeHistoryService")
+local recording
 pcall(function()
-	gravacao = historico:TryBeginRecording("Montar rig R6")
+	recording = history:TryBeginRecording("Build R6 rig")
 end)
 
-local montados = {}
-local tudoCerto = true
-for _, modelo in modelos do
-	local ok, erro = pcall(montar, modelo)
+local rigged = {}
+local allGood = true
+for _, model in models do
+	local ok, err = pcall(rig, model)
 	if ok then
-		table.insert(montados, modelo)
-		print("[MeltingR6] Rig R6 montado: " .. modelo:GetFullName())
+		table.insert(rigged, model)
+		print("[MeltingR6] R6 rig ready: " .. model:GetFullName())
 	else
-		tudoCerto = false
-		warn("[MeltingR6] Erro ao montar " .. modelo:GetFullName() .. ": " .. tostring(erro))
+		allGood = false
+		warn("[MeltingR6] Couldn't rig " .. model:GetFullName() .. ": " .. tostring(err))
 	end
 end
 
-if gravacao then
+if recording then
 	pcall(function()
-		historico:FinishRecording(
-			gravacao,
-			if tudoCerto then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel
+		history:FinishRecording(
+			recording,
+			if allGood then Enum.FinishRecordingOperation.Commit else Enum.FinishRecordingOperation.Cancel
 		)
 	end)
 end
 
 pcall(function()
-	game:GetService("Selection"):Set(montados)
+	game:GetService("Selection"):Set(rigged)
 end)

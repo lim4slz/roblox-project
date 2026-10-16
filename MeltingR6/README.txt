@@ -1,155 +1,161 @@
 MELTING R6
 ==========
 
-Personagem R6 com a cabeça derretendo: olho saltado, órbita vazia com o nervo
-pendurado e um sorrisão cheio de dente. Corpo no formato clássico do R6, então
-funciona com animações R6.
+An R6 character whose head is melting: one eye popping out, an empty socket
+with a nerve hanging from it, and a huge grin full of teeth. The body is the
+classic R6 shape, so it works with any R6 animation.
 
-O rig é igual ao de um R6 normal do Roblox: Humanoid (RigType R6),
-HumanoidRootPart e os Motor6D Neck, Left/Right Shoulder, Left/Right Hip e
-RootJoint, com os nomes que o Animate e o Animation Editor esperam.
+The rig is the same as a regular Roblox R6: a Humanoid set to R6, a
+HumanoidRootPart, and the usual Motor6Ds (Neck, Left/Right Shoulder,
+Left/Right Hip and RootJoint), named the way the Animate script and the
+Animation Editor expect.
 
 
-O QUE TEM NO ZIP
-----------------
+WHAT'S IN THE ZIP
+-----------------
 
-As pastas têm o nome do lugar do Explorer onde cada arquivo vai:
+Each folder is named after the place in Studio's Explorer where its file goes:
 
   MeltingR6/
-    README.txt                  este arquivo
+    README.txt                  this file
     Workspace/
-      MeltingR6.glb             o modelo 3D (entra pelo Importer 3D)
+      MeltingR6.glb             the 3D model (goes in through the 3D Importer)
     ServerScriptService/
-      MeltingR6Rig.rbxm         o script, pra arrastar no ServerScriptService
-      MeltingR6Rig.lua          o mesmo script em texto, pra colar se preferir
-    Teste/
-      MeltingR6_Teste.rbxl      place vazio já com o script, pra testar
+      MeltingR6Rig.rbxm         the script, drag it onto ServerScriptService
+      MeltingR6Rig.lua          the same script as plain text, if you'd rather paste it
+    Test/
+      MeltingR6_Test.rbxl       an empty place with the script already in it
 
-Extraia o zip antes de começar (botão direito > Extrair tudo).
+Unzip it first (right click > Extract All).
 
-Por que o modelo não vem pronto dentro de um .rbxm? O Roblox só mostra malha
-que foi enviada pra sua conta, e quem envia é o Importer 3D do Studio. Então o
-modelo entra pelo Importer e o script monta o rig em cima dele.
+Why isn't the model already inside a .rbxm? Roblox only shows meshes that were
+uploaded to your account, and the thing that uploads them is Studio's 3D
+Importer. So the model goes in through the Importer, and the script builds the
+rig on top of it.
 
 
-COLOCAR NO SEU JOGO
--------------------
+ADDING IT TO YOUR GAME
+----------------------
 
-1. Abra o seu jogo no Roblox Studio. Se não aparecer o Explorer, abra em
-   View > Explorer.
+1. Open your game in Roblox Studio. If you can't see the Explorer, open it
+   from View > Explorer.
 
-2. MODELO: aba Avatar > Importer 3D (ou File > Import 3D) e escolha
-   Workspace/MeltingR6.glb.
-   Pode deixar tudo como vem, só confira se "Merge Meshes" está DESLIGADO.
-   Clique em Import. O MeltingR6 aparece no Workspace.
+2. THE MODEL: go to the Avatar tab > 3D Importer (or File > Import 3D) and
+   pick Workspace/MeltingR6.glb.
+   You can leave the settings as they are, just make sure "Merge Meshes" is
+   OFF. Click Import and MeltingR6 shows up in Workspace.
 
-3. SCRIPT: arraste ServerScriptService/MeltingR6Rig.rbxm do seu computador e
-   solte em cima do ServerScriptService no Explorer. Outro jeito: botão
-   direito no ServerScriptService > Insert from File... e escolha o arquivo.
+3. THE SCRIPT: drag ServerScriptService/MeltingR6Rig.rbxm from your computer
+   and drop it on ServerScriptService in the Explorer. Or right click
+   ServerScriptService > Insert from File... and pick the file.
 
-   (Se preferir colar: botão direito no ServerScriptService > Insert Object >
-   Script, apague o que vem escrito, abra o MeltingR6Rig.lua no bloco de notas,
-   copie tudo e cole no Script.)
+   (Rather paste it? Right click ServerScriptService > Insert Object > Script,
+   delete what's in it, open MeltingR6Rig.lua in Notepad, copy everything and
+   paste it into the Script.)
 
-4. Aperte Play. No Output aparece:
-     [MeltingR6] Rig R6 montado: Workspace.MeltingR6
-   e ele fica de pé no chão, montado.
+4. Hit Play. The Output should say:
+     [MeltingR6] R6 rig ready: Workspace.MeltingR6
+   and he'll be standing on the ground, fully rigged.
 
-Com tudo certo, o Explorer fica assim:
+When everything is in place, the Explorer looks like this:
 
   Workspace
-    MeltingR6              (Model)    o que veio do Importer
+    MeltingR6              (Model)    what the Importer brought in
   ServerScriptService
-    MeltingR6Rig           (Script)   monta o rig quando o jogo liga
+    MeltingR6Rig           (Script)   builds the rig when the game starts
 
-Se o arquivo cair no lugar errado (no Workspace, por exemplo), é só arrastar
-no Explorer pra onde ele deveria estar.
+If a file lands in the wrong spot (in Workspace, for example), just drag it in
+the Explorer to where it belongs.
 
-Arquivo .rbxm não abre com dois cliques. Abra o Studio primeiro e arraste o
-arquivo pra dentro da janela dele.
-
-
-TESTAR NUM PLACE SEPARADO
--------------------------
-
-Abra Teste/MeltingR6_Teste.rbxl no Studio (File > Open from File...). Ele já
-tem chão, spawn e o script no ServerScriptService. Faça só o passo 2 (importar
-o .glb), aperte Play e ande até ele.
+.rbxm files don't open with a double click. Open Studio first, then drag the
+file into its window.
 
 
-USANDO NO JOGO
---------------
+TRYING IT IN A SEPARATE PLACE
+-----------------------------
 
-Mais de um: duplique o MeltingR6 no Workspace (Ctrl+D) quantas vezes quiser.
-Todos que estiverem no Workspace quando o jogo liga são montados.
+Open Test/MeltingR6_Test.rbxl in Studio (File > Open from File...). It already
+has a floor, a spawn and the script in ServerScriptService. Just do step 2
+(import the .glb), hit Play and walk over to him.
 
-Andar até um ponto (é um Humanoid normal, igual qualquer NPC). Num Script no
-ServerScriptService:
+
+USING IT IN YOUR GAME
+---------------------
+
+Want more than one? Duplicate MeltingR6 in Workspace (Ctrl+D) as many times as
+you like. Every one that's in Workspace when the game starts gets rigged.
+
+Walking somewhere (it's a regular Humanoid, so it works like any NPC). In a
+Script inside ServerScriptService:
 
     local npc = workspace:WaitForChild("MeltingR6")
     npc:WaitForChild("Humanoid"):MoveTo(Vector3.new(0, 0, -30))
 
-Tocar uma animação R6 (ele não vem com animação, fica parado em pé):
+Playing an R6 animation (he doesn't come with any, he just stands still):
 
     local npc = workspace:WaitForChild("MeltingR6")
-    local animacao = Instance.new("Animation")
-    animacao.AnimationId = "rbxassetid://COLE_O_ID_AQUI"
-    npc:WaitForChild("Humanoid"):WaitForChild("Animator"):LoadAnimation(animacao):Play()
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://PASTE_YOUR_ID_HERE"
+    npc:WaitForChild("Humanoid"):WaitForChild("Animator"):LoadAnimation(animation):Play()
 
-O Roblox só toca animação publicada pela mesma conta (ou grupo) que é dona do
-jogo.
+Keep in mind Roblox only plays animations published by the same account (or
+group) that owns the game.
 
-Spawnar por script: o MeltingR6Rig só monta o que está no Workspace na hora
-que o servidor liga. Pra guardar no ServerStorage e clonar depois, deixe ele
-montado no Studio primeiro (próxima parte), arraste pro ServerStorage e clone:
+Spawning him from a script: MeltingR6Rig only rigs what's in Workspace when the
+server starts. If you want to keep him in ServerStorage and clone him later,
+rig him in Studio first (next section), drag him into ServerStorage, and clone
+him from there:
 
-    local modelo = game.ServerStorage.MeltingR6:Clone()
-    modelo:PivotTo(CFrame.new(0, 5, 0))
-    modelo.Parent = workspace
+    local model = game.ServerStorage.MeltingR6:Clone()
+    model:PivotTo(CFrame.new(0, 5, 0))
+    model.Parent = workspace
 
-Jogar com ele: deixe montado no Studio (próxima parte), renomeie o modelo pra
-StarterCharacter e coloque dentro do StarterPlayer. O jogo precisa estar em R6
-(Game Settings > Avatar > R6). Pra ele andar animado, dê Play, copie o script
-"Animate" do seu personagem (Workspace > seu nome), pare o jogo e cole o
-Animate dentro do StarterCharacter.
+Playing as him: rig him in Studio first (next section), rename the model to
+StarterCharacter and put it inside StarterPlayer. Your game has to be set to
+R6 (Game Settings > Avatar > R6). To get him walking with animations, hit Play,
+copy the "Animate" script from your own character (Workspace > your name),
+stop the game and paste Animate inside StarterCharacter.
 
 
-DEIXAR MONTADO NO STUDIO (PRA ANIMAR, CLONAR OU JOGAR COM ELE)
+KEEPING HIM RIGGED IN STUDIO (TO ANIMATE, CLONE OR PLAY AS HIM)
 ---------------------------------------------------------------
 
-Pelo Play o rig só existe enquanto o jogo roda. Pra ele ficar montado de vez
-no place:
+When you hit Play, the rig only exists while the game is running. To make it
+stick in the place:
 
-1. Abra o MeltingR6Rig.lua no bloco de notas e copie tudo.
-2. No Studio: View > Command Bar, cole e aperte Enter.
+1. Open MeltingR6Rig.lua in Notepad and copy everything.
+2. In Studio: View > Command Bar, paste it and hit Enter.
 
-Pronto, o MeltingR6 fica com Humanoid e Motor6D salvos no place, e já dá pra
-abrir no Animation Editor. Ctrl+Z desfaz. Pode deixar o script no
-ServerScriptService mesmo assim: o que já está montado ele não mexe.
-
-
-SE ALGO DER ERRADO
-------------------
-
-"Não achei o modelo importado no Workspace"
-    O modelo não está no Workspace ou foi importado com "Merge Meshes" ligado
-    (vira uma peça só). Importe de novo com essa opção desligada.
-
-"A malha veio girada na importação"
-    O rig funciona normal. Só importa se você usa script que escreve o
-    Neck.C0 com valor fixo (cabeça seguindo o mouse, por exemplo): aí importe
-    de novo trocando "World Forward" entre Front e Back.
-
-Ele veio gigante ou minúsculo
-    Não precisa mexer, o script ajusta pro tamanho certo de R6.
+That's it. MeltingR6 now keeps its Humanoid and Motor6Ds saved in the place,
+and you can open him in the Animation Editor. Ctrl+Z undoes it. You can leave
+the script in ServerScriptService anyway: it doesn't touch anything that's
+already rigged.
 
 
-DETALHES
---------
+IF SOMETHING GOES WRONG
+-----------------------
 
-- A cabeça é dividida em várias peças (Head, Mouth, EyeSockets, PoppingEye,
-  Nerve, Teeth e Gums) porque o Roblox não aceita malha com mais de uns
-  20 mil triângulos. Fica tudo soldado na Head, sem massa e sem colisão.
-- Só Torso e Head colidem, igual ao R6 normal.
-- Uns 100 mil triângulos no total. Pra um monstro principal está tranquilo;
-  se for colocar dezenas ao mesmo tempo, pode pesar em celular.
+"Couldn't find the imported model in Workspace"
+    The model isn't in Workspace, or it was imported with "Merge Meshes" on
+    (which squashes it into a single part). Import it again with that option
+    off.
+
+"The mesh came in rotated"
+    The rig works fine. This only matters if you use a script that writes a
+    fixed Neck.C0 (a head that follows the mouse, for example). If that's you,
+    import it again switching "World Forward" between Front and Back.
+
+He came in huge or tiny
+    Leave it, the script resizes him to the right R6 size.
+
+
+DETAILS
+-------
+
+- The head is split into several parts (Head, Mouth, EyeSockets, PoppingEye,
+  Nerve, Teeth and Gums) because Roblox won't take a mesh with more than about
+  20k triangles. They're all welded to the Head, massless and with no
+  collision.
+- Only the Torso and Head collide, same as a regular R6.
+- Around 100k triangles in total. Fine for a main monster, but if you put
+  dozens of them on screen at once it can get heavy on phones.
