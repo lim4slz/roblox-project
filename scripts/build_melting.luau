@@ -1,12 +1,14 @@
 --[[
-	Gera a pasta MeltingR6 a partir de src/MeltingR6Rig.server.luau:
+	Gera a pasta MeltingR6 a partir de src/MeltingR6Rig.server.luau e zipa tudo em MeltingR6.zip:
 	  MeltingR6/ServerScriptService/MeltingR6Rig.rbxm
+	  MeltingR6/ServerScriptService/MeltingR6Rig.lua
 	  MeltingR6/Teste/MeltingR6_Teste.rbxl
 
 	  lune run scripts/build_melting
 ]]
 
 local fs = require("@lune/fs")
+local process = require("@lune/process")
 local roblox = require("@lune/roblox")
 
 local Instance = roblox.Instance
@@ -32,6 +34,7 @@ for _, pasta in { OUT .. "/ServerScriptService", OUT .. "/Teste" } do
 end
 
 fs.writeFile(OUT .. "/ServerScriptService/MeltingR6Rig.rbxm", roblox.serializeModel({ novoScript() }))
+fs.writeFile(OUT .. "/ServerScriptService/MeltingR6Rig.lua", fonte)
 
 local game = Instance.new("DataModel")
 local workspace = game:GetService("Workspace")
@@ -59,4 +62,28 @@ spawn.Parent = workspace
 novoScript().Parent = game:GetService("ServerScriptService")
 
 fs.writeFile(OUT .. "/Teste/MeltingR6_Teste.rbxl", roblox.serializePlace(game))
-print("ok")
+
+-- zip sem data nos arquivos: mesmo conteúdo, mesmo zip
+local ZIP = [[
+import os, sys, zipfile
+pasta, destino = sys.argv[1], sys.argv[2]
+arquivos = []
+for raiz, dirs, nomes in os.walk(pasta):
+    dirs.sort()
+    for nome in sorted(nomes):
+        arquivos.append(os.path.join(raiz, nome))
+with zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+    for caminho in arquivos:
+        info = zipfile.ZipInfo(caminho, date_time=(2026, 1, 1, 0, 0, 0))
+        info.external_attr = 0o644 << 16
+        info.compress_type = zipfile.ZIP_DEFLATED
+        with open(caminho, "rb") as f:
+            z.writestr(info, f.read())
+print(len(arquivos), "arquivos")
+]]
+if fs.isFile(OUT .. ".zip") then
+	fs.removeFile(OUT .. ".zip")
+end
+local r = process.exec("python3", { "-I", "-c", ZIP, OUT, OUT .. ".zip" })
+assert(r.ok, r.stderr)
+print(OUT .. ".zip: " .. string.gsub(r.stdout, "%s+$", ""))
