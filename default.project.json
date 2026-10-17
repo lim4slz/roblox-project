@@ -1,0 +1,111 @@
+{
+  "name": "DoomspireBrickbattle",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Shared": { "$path": "src/ReplicatedStorage/Shared" }
+    },
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Server": { "$path": "src/ServerScriptService/Server" }
+    },
+
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "Tools": { "$path": "assets/Tools.rbxm" },
+      "AdminPanel": { "$path": "src/ServerStorage/AdminPanel" }
+    },
+
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "$properties": {
+        "CameraMaxZoomDistance": 40,
+        "CharacterWalkSpeed": 16,
+        "CharacterUseJumpPower": true,
+        "CharacterJumpPower": 50
+      },
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "Client": { "$path": "src/StarterPlayer/StarterPlayerScripts/Client" }
+      }
+    },
+
+    "Players": {
+      "$className": "Players",
+      "$properties": {
+        "CharacterAutoLoads": false
+      }
+    },
+
+    "Teams": {
+      "$className": "Teams",
+      "Blue": {
+        "$className": "Team",
+        "$properties": { "TeamColor": { "BrickColor": 23 }, "AutoAssignable": false }
+      },
+      "Red": {
+        "$className": "Team",
+        "$properties": { "TeamColor": { "BrickColor": 21 }, "AutoAssignable": false }
+      }
+    },
+
+    "Workspace": {
+      "$className": "Workspace",
+      "$properties": {
+        "Gravity": 196.2,
+        "FallenPartsDestroyHeight": -500,
+        "StreamingEnabled": false
+      },
+      "Arena": { "$path": "assets/Arena.rbxm" },
+      "Lobby": { "$path": "assets/Lobby.rbxm" }
+    },
+
+    "SoundService": {
+      "$className": "SoundService",
+      "$properties": { "RespectFilteringEnabled": true },
+      "GameAudio": { "$path": "assets/GameAudio.rbxm" }
+    },
+
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "Technology": "ShadowMap",
+        "ClockTime": 14.5,
+        "Brightness": 2.6,
+        "Ambient": [0.36, 0.38, 0.45],
+        "OutdoorAmbient": [0.55, 0.57, 0.64],
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.3,
+        "GlobalShadows": true,
+        "ShadowSoftness": 0.25,
+        "GeographicLatitude": 30
+      },
+      "Atmosphere": {
+        "$className": "Atmosphere",
+        "$properties": {
+          "Density": 0.26,
+          "Offset": 0.1,
+          "Color": [0.78, 0.88, 1.0],
+          "Decay": [0.42, 0.55, 0.72],
+          "Glare": 0.15,
+          "Haze": 0.9
+        }
+      },
+      "Bloom": {
+        "$className": "BloomEffect",
+        "$properties": { "Intensity": 0.45, "Size": 24, "Threshold": 1.4 }
+      },
+      "ColorGrade": {
+        "$className": "ColorCorrectionEffect",
+        "$properties": { "Saturation": 0.12, "Contrast": 0.05, "Brightness": 0.02 }
+      },
+      "SunRays": {
+        "$className": "SunRaysEffect",
+        "$properties": { "Intensity": 0.04, "Spread": 0.6 }
+      }
+    }
+  }
+}
